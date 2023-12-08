@@ -1,0 +1,39 @@
+﻿@model DACN3.Models.ClassDetail
+
+@{
+    ViewData["Title"] = "CreateClassDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>CreateClassDetail</h1>
+
+<h4>ClassDetail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateClassDetail">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdDevice" class="control-label"></label>
+                <select asp-for="IdDevice" class ="form-control" asp-items="ViewBag.IdDevice"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdClassroom" class="control-label"></label>
+                <select asp-for="IdClassroom" class ="form-control" asp-items="ViewBag.IdClassroom"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantify" class="control-label"></label>
+                <input asp-for="Quantify" class="form-control" />
+                <span asp-validation-for="Quantify" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<DACN3.Models.Notification>
+@{
+    Layout = "~/Views/Shared/LayoutInventory.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+    <!-- Thêm một container cho Toasts -->
+    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+        <!-- Một Toast, có thể bị ẩn ban đầu -->
+        <div class="toast" style="position: absolute; top: 0; right: 0;" id="notificationToast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+            <div class="toast-header">
+                <strong class="mr-auto">Thông báo</strong>
+                <small class="text-muted">Just now</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body" id="notificationMessage">
+                <!-- Nội dung thông báo sẽ được cập nhật từ SignalR -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Nhúng thư viện SignalR -->
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script>
+        // Tạo kết nối tới Hub SignalR
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/notificationHub") // Thay thế đường dẫn bằng đường dẫn tới Hub SignalR của bạn
+            .build();
+
+        // Lắng nghe sự kiện từ server
+        connection.on("ReceiveNotification", function (message) {
+            // Cập nhật nội dung của Toasts
+            var toast = document.getElementById('notificationToast');
+            var toastMessage = document.getElementById('notificationMessage');
+
+            toastMessage.innerText = message; // Cập nhật nội dung thông báo
+
+            // Hiển thị Toast
+            var bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+        });
+
+        // Bắt đầu kết nối tới Hub SignalR
+        connection.start().catch(err => console.error(err));
+    </script>
+</body>
+</html>

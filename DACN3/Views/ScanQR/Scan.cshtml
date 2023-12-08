@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewData["Title"] = "Scan";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCANNER APP</title>
+</head>
+<body>
+    <script src="~/js/qrScanner.js"></script>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <div style="text-align: center;">
+
+            <div id="reader" style="width: 500px;"></div>
+            <p style="color: blue;" id="result"></p>
+        </div>
+    </div>
+
+    <script>
+        const html5Qrcode = new Html5Qrcode('reader');
+        const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+            if (decodedText) {
+
+
+                // Kiểm tra xem decodedText có đúng định dạng không
+                const regexPattern = /^\d+-\d+$/; // Chuỗi phải chỉ chứa số và có một ký tự '-' giữa chúng
+                const isFormatCorrect = regexPattern.test(decodedText);
+
+                if (!isFormatCorrect) {
+                    alert('Kết quả không đúng với định dạng. Vui lòng quét lại mã QR.');
+                    html5Qrcode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+                } else {
+                    // Gọi API fetch và kiểm tra kết quả
+                    fetch('/ScanQR/actionResult', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ result: decodedText })
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Lỗi khi gọi API');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                alert("Thực hiện thành công");
+                                const classroomID = data.classroomID;
+                                const deviceID = data.deviceID;
+                                window.location.href = '/ScanQR/DetailsDevice?classroomID=' + classroomID + '&deviceID=' + deviceID;
+                               
+                            } else {
+                                alert(data.message); // Hiển thị thông báo
+                                html5Qrcode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+                            }
+                        });
+                }
+                html5Qrcode.stop();
+            }
+        }
+
+        const config = { fps: 20, qrbox: { width: 250, height: 250 } }
+        html5Qrcode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+    </script>
+</body>
+</html>
+
+
+
+
+

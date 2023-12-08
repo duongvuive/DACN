@@ -1,0 +1,11 @@
+﻿@page
+@model AccessDeniedModel
+@{
+    ViewData["Title"] = "Cấm truy cập.";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<header>
+    <h1 class="text-danger">@ViewData["Title"]</h1>
+    <p class="text-danger">Tài khoản của bạn không đủ quyền truy cập mục này.</p>
+</header>

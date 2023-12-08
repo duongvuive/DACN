@@ -1,0 +1,72 @@
+﻿@model IEnumerable<DACN3.Models.AspNetUser>
+
+@{
+    ViewData["Title"] = "TaiKhoan";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+
+}
+<link rel="stylesheet" href="~css/site.css">
+<h1>Quản lý tài khoản</h1>
+
+<p>
+    <a class="btn btn-lg btn-primary" asp-area="Identity" asp-page="/Account/Register">Tạo tài khoản mới</a>
+    <form class="input-group float-right" asp-controller="Home" asp-action="TaiKhoan" method="get">
+        <p>
+            <input type="text" class="form-control" name="searchString" placeholder="Tìm kiếm" />
+            <div class="input-group-append">
+            <input class="btn btn-gradient-primary" type="submit" value="Tìm kiếm" />
+            </div>
+        </p>
+    </form>
+<p>@TempData["Message"]</p>
+<table class="table">
+    <thead>
+        <tr>
+           @*  <th>
+                @Html.DisplayNameFor(model => model.Roles)
+            </th> *@
+            <th>
+               Id
+            </th>
+            <th>
+                <a class="text-dark" asp-controller="Home" asp-action="TaiKhoan" asp-route-sortOrder="name_desc">Tên người dùng</a>
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+               @*  <td>
+                    @Html.DisplayFor(modelItem => item.Roles)
+                </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    <a class="btn btn-lg btn-primary" asp-action="SuaTaiKhoan" asp-route-id="@item.Id">Sửa</a> |
+                    @*   <a asp-action="Details" asp-route-id="@item.Id">Details</a> | *@
+                    <a class="btn btn-lg btn-gradient-danger" asp-action="XoaTaiKhoan" asp-route-id="@item.Id">Xoá</a>
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
