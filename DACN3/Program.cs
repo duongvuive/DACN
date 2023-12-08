@@ -57,7 +57,7 @@ using(var scope=app.Services.CreateScope())
 {
     var roleManager = 
         scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var roles = new[] { "Admin", "Manager", "Member" };
+    var roles = new[] { "Admin", "Manager", "Inventory Management" };
     foreach(var role in roles)
     {
         if(!await roleManager.RoleExistsAsync(role))
@@ -99,8 +99,8 @@ using (var scope = app.Services.CreateScope())
 {
     var userManager =
         scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-    string id = "76cc115a-3659-4fd2-aaaf-df23875d2dbb";
-    string email = "member@member.com";
+    string id = "099f893c-ab77-4ac0-8a8c-ca36b9ca58ea";
+    string email = "quanly@gmail.com";
     string password = "Abc@123";
     if (await userManager.FindByEmailAsync(id) == null)
     {
@@ -108,7 +108,7 @@ using (var scope = app.Services.CreateScope())
         user.UserName = email;
         user.Email = email;
         await userManager.CreateAsync(user, password);
-        await userManager.AddToRoleAsync(user, "Member");
+        await userManager.AddToRoleAsync(user, "Inventory Management");
     }
 }
 app.Run();
