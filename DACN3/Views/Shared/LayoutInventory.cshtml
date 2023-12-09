@@ -27,7 +27,7 @@
                     <span class="mdi mdi-menu"></span>
                 </button>
                 <ul class="navbar-nav navbar-nav-right">
-                    <li class="nav-item d-none d-lg-block full-screen-link">
+                    @* <li class="nav-item d-none d-lg-block full-screen-link">
                         <a class="nav-link" asp-area="" asp-controller="Notification" asp-action="ListNotification">
                             <i class="mdi mdi-bell-outline"></i>
                         </a>
@@ -37,7 +37,7 @@
                             <i class="mdi mdi-fullscreen"></i>
 
                         </a>
-                    </li>
+                    </li> *@
                     <i class="fas fa-plus" asp-area="" asp-controller="Manager" asp-action="CreateClassDetail"></i>
                 </ul>
                 <partial name="_LoginPartial" />
@@ -52,8 +52,14 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                            <span class="menu-title">none</span>
+                        <a class="nav-link" asp-area="" asp-controller="Notification" asp-action="ListNotification">
+                            <span class="menu-title">Danh sách thông báo</span>
+                            <i class="mdi mdi-home menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="ScanQR" asp-action="Scan">
+                            <span class="menu-title">Quét mã QR</span>
                             <i class="mdi mdi-home menu-icon"></i>
                         </a>
                     </li>
