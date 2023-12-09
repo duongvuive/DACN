@@ -57,6 +57,7 @@
     box-sizing: border-box;
     font-family: Helvetica, Arial, sans-serif;
 }
+
 @-webkit-keyframes flash {
   0% {
     opacity: 1; }
@@ -14673,4 +14674,21 @@ button {
 .toast.info {
     --color: #3498db;
     background-image: linear-gradient(to right, #3498db55, #22242F 30%);
+}
+.divider:after,
+.divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+}
+
+.h-custom {
+    height: calc(100% - 73px);
+}
+
+@media (max-width: 450px) {
+    .h-custom {
+        height: 100%;
+    }
 }
