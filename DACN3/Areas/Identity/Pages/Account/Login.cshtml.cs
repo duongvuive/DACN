@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using DACN3.Models;
+using System.Security.Claims;
 
 namespace DACN3.Areas.Identity.Pages.Account
 {
@@ -24,7 +25,7 @@ namespace DACN3.Areas.Identity.Pages.Account
         private readonly ILogger<LoginModel> _logger;
         private readonly Qldevice1Context _context;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger,Qldevice1Context context)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, Qldevice1Context context)
         {
             _signInManager = signInManager;
             _logger = logger;
@@ -111,35 +112,47 @@ namespace DACN3.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-           
+
 
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+
                 if (result.Succeeded)
                 {
                     /* var user= _context.AspNetUsers.FirstOrDefault(x=>x.Email == Input.Email);
                      var userRole = _context.AspNetUserRoles.FirstOrDefault(x => x.UserId == user.Id);
                      var Role=_context.AspNetRoles.FirstOrDefault(x=>x.Id==userRole.RoleId);*/
-                    if(IsInRole("Admin"))
+                    var user = _context.AspNetUsers.FirstOrDefault(x => x.Email == Input.Email);
+                    var IsAccountInformation = _context.AccountInformations.FirstOrDefault(x => x.IdAspNetUsers == user.Id);
+
+                    if (IsAccountInformation != null)
                     {
-                        return RedirectToAction("Index", "Home");
+                        if (IsInRole("Admin"))
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else if (IsInRole("Inventory Management"))
+                        {
+                            return RedirectToAction("NotificationInventory", "Notification");
+                        }
+                        else if (IsInRole("Manager"))
+                        {
+                            return RedirectToAction("ManagerStaff", "Manager");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Tài khoản này chưa được phân quyền");
+                            return Page();
+                        }
                     }
-                     else if (IsInRole("Inventory Management"))
+                    else if (IsAccountInformation == null)
                     {
-                        return RedirectToAction("NotificationInventory", "Notification");
+                        return RedirectToAction("AccountInformation", "Information");
                     }
-                    else if(IsInRole("Manager"))
-                    {
-                        return RedirectToAction("ManagerStaff", "Manager");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Tài khoản này chưa được phân quyền");
-                        return Page();
-                    }
+
                     /*_logger.LogInformation("Người dùng đã đăng nhập.");
                     return LocalRedirect(returnUrl);*/
                 }
