@@ -6,6 +6,6 @@ namespace DACN3.Service
     public interface INotificationService
     {
         void CreateBrokenHistory(string senderID, int deviceID);
-        void CreateNotifications(string IdUser, int IdHistory,string information);
+        void CreateNotifications( int IdHistory, string information, string image);
     }
 }

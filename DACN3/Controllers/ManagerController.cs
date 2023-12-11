@@ -46,7 +46,7 @@ namespace DACN3.Controllers
             /*return View(classDetail); */
         }
 
-        [HttpPost]
+      /*  [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ManagerBorrow()
         {
@@ -62,9 +62,9 @@ namespace DACN3.Controllers
                 };
 
 
-                _context.Borrows.Add(borrrow);
+                _context.Add(borrrow);
                 _context.SaveChanges();
                 return View(borrrow); 
-        }
+        }*/
     }
 }

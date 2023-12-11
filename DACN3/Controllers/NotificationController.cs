@@ -25,34 +25,38 @@ namespace DACN3.Controllers
         }
 
         [Authorize(Roles = "Manager")]
-        public IActionResult Report(int deviceID)
+        public IActionResult Report()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            int deviceID =int.Parse(TempData["DeviceID"].ToString());
             if (!string.IsNullOrEmpty(userId))
             {
                 string id_sender = userId.ToString();
                 var account = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
                 var storedName = TempData["NameClass"] as string;
+                var Image = TempData["image"] as string;
                 string sender_name = account.UserName;
                 var role = _context.AspNetRoles.FirstOrDefault(x => x.Name == "Inventory Management");
                 var RoleUser = _context.AspNetUserRoles.FirstOrDefault(X => X.RoleId == role.Id);
                 string Validator_ID = RoleUser.UserId.ToString();
-                string information = $"Người gửi: {sender_name} báo cáo về thiết bị hư tại phòng học : {storedName}";
+               
                 if (deviceID != 0 || id_sender != null)
                 {
                     _notificationSercvice.CreateBrokenHistory(id_sender, deviceID);
-                    
+
                     int latestBrokenHistoryId = _context.BrokenHistories
                       .Where(b => b.SenderId == id_sender && b.DeviceClassroomId == deviceID)
                       .OrderByDescending(b => b.Timestamp)
                       .Select(b => b.Id)
                       .FirstOrDefault();
-                    _notificationSercvice.CreateNotifications(Validator_ID, latestBrokenHistoryId, information);
+                    var date = _context.BrokenHistories.FirstOrDefault(x => x.Id == latestBrokenHistoryId);
+                    string information = $"Người gửi: {sender_name} báo cáo về thiết bị hư tại phòng học : {storedName} ngày gửi báo cáo :{date.Timestamp}";
+                    _notificationSercvice.CreateNotifications(latestBrokenHistoryId, information, Image);
                     _hubContext.Clients.User(Validator_ID).SendAsync("ReceiveNotification", information);
                     return View();
                 }
             }
-            
+
             return View();
         }
         [Authorize(Roles = "Inventory Management")]
@@ -60,14 +64,14 @@ namespace DACN3.Controllers
         {
             return View();
         }
-        public IActionResult ListNotification(int? Page)
+       /* public IActionResult ListNotification(int? Page)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             int pageSize = 8;
             int pageNumber = Page == null || Page < 0 ? 1 : Page.Value;
-            var lstNotification = _context.Notifications.Where(x => x.ValidatorId == userId).ToList();
+            var lstNotification = _context.Notifications.Where(x => x. == userId).ToList();
             PagedList<Notification> lst = new PagedList<Notification>(lstNotification, pageNumber, pageSize);
             return View(lstNotification);
-        }
+        }*/
     }
 }

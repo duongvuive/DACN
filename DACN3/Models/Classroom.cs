@@ -10,7 +10,7 @@ public partial class Classroom
     public string Name { get; set; } = null!;
 
     public int IdFloor { get; set; }
-    public int Quantify { get; set; }
+
     public virtual ICollection<ClassDetail> ClassDetails { get; set; } = new List<ClassDetail>();
 
     public virtual Floor IdFloorNavigation { get; set; } = null!;

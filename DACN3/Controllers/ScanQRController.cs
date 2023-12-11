@@ -55,12 +55,12 @@ namespace DACN3.Controllers
             var targetSupplier = manageDevice.Suppliers.FirstOrDefault(c => c.Id == targetDevice.IdSupplier);
             var targetQuantify = manageDevice.ClassDetails.FirstOrDefault(c => c.IdClassroom == classroomID && c.IdDevice == deviceID);
             var Name = $"{targetArea.Name} - {tagetFloor.Name} -{targetClass.Name}";
+            TempData["DeviceID"] = resultID.Id;
             TempData["NameClass"] = Name;
             if (targetArea != null && tagetFloor != null && targetClass != null && targetDevice != null && targetClassfication != null && targetSupplier != null && targetQuantify != null)
             {
                 var DetailOfDevice = new DetailOfDevice
                 {
-                    DeviceID = resultID.Id,
                     NameDevice = targetDevice.Name,
                     NameDeviceClassfication = targetClassfication.Name,
                     NameSupplier = targetSupplier.Name,

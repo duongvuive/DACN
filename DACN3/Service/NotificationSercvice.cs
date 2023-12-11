@@ -27,17 +27,18 @@ namespace DACN3.Service
             _context.SaveChanges();
         }
 
-        public void CreateNotifications(string IdUser, int IdHistory, string information)
+        public void CreateNotifications( int IdHistory, string information,string image)
         {
             var newNotification = new Notification
             {
-                ValidatorId = IdUser,
+                
                 IdBrokenHistory = IdHistory,
-                Information = information
+                Description = information,
+                Image=image
             };
             _context.Notifications.Add(newNotification);
             _context.SaveChanges();
         }
-        
+
     }
 }

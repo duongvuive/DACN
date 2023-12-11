@@ -5,10 +5,6 @@ namespace DACN3.Models;
 
 public partial class AspNetRole
 {
-    public AspNetRole()
-    {
-        AspNetRoleClaims = new List<AspNetRoleClaim>();
-    }
     public string Id { get; set; } = null!;
 
     public string? Name { get; set; }
@@ -19,5 +15,5 @@ public partial class AspNetRole
 
     public virtual ICollection<AspNetRoleClaim> AspNetRoleClaims { get; set; } = new List<AspNetRoleClaim>();
 
-    public virtual ICollection<AspNetUserRole> UserRoles { get; set; } = new List<AspNetUserRole>();
+    public virtual ICollection<AspNetUser> Users { get; set; } = new List<AspNetUser>();
 }

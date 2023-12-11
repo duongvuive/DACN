@@ -2,7 +2,7 @@
 {
     public class DetailOfDevice
     {
-        public int DeviceID { get; set; }
+        /*public int DeviceID { get; set; }*/
         public string NameDevice { get; set; }
         public string NameDeviceClassfication { get; set; }
         public string NameSupplier { get; set; }

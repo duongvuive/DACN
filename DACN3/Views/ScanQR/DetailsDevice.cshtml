@@ -10,24 +10,22 @@
 </head>
 <body>
     <h1>Thông Tin Thiết Bị</h1>
-    <p> <span id="deviceId" data-id="@Model.DeviceID"></span></p>
+
     <p><strong>Name:</strong> @Model.NameDevice</p>
     <p><strong>Classification:</strong> @Model.NameDeviceClassfication</p>
     <p><strong>Supplier:</strong> @Model.NameSupplier</p>
     <p><strong>Class:</strong> @Model.NameClass</p>
     <p><strong>Quantity:</strong> @Model.Quantify</p>
-    <button id="buttonToReportPage">Chuyển đến trang báo cáo</button>
+    <button id="buttonToReportPage">Chuyển đến trang chụp hình</button>
 
     <script>
         document.getElementById('buttonToReportPage').addEventListener('click', function (event) {
             event.preventDefault(); // Ngăn chặn hành động mặc định của nút button
 
-            const deviceId = document.getElementById("deviceId").getAttribute("data-id"); // Lấy DeviceID từ thuộc tính data-id
-
             // Tạo URL chứa DeviceID (sử dụng template string)
-            const url = `/Notification/Report?deviceID=${deviceId}`;
+           
+            const url = `/Camera/Capture`;
 
-            // Chuyển hướng trang tới URL mới có chứa DeviceID
             window.location.href = url;
         });
     </script>

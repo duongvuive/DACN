@@ -7,12 +7,13 @@ public partial class Notification
 {
     public int Id { get; set; }
 
-    public string ValidatorId { get; set; } = null!;
-
     public int IdBrokenHistory { get; set; }
-    public string Information { get; set; } = null!;
-    public bool Watched { get; set; }
-    public virtual BrokenHistory IdBrokenHistoryNavigation { get; set; } = null!;
 
-    public virtual AspNetUser Validator { get; set; } = null!;
+    public string Description { get; set; } = null!;
+
+    public string Image { get; set; } = null!;
+
+    public virtual ICollection<Confirmation> Confirmations { get; set; } = new List<Confirmation>();
+
+    public virtual BrokenHistory IdBrokenHistoryNavigation { get; set; } = null!;
 }
