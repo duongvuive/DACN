@@ -19,8 +19,8 @@
         <!-- partial:~/lib/layoutadmin/partials/_navbar.html -->
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo" href=""><img src="~/lib/layoutadmin/assets/images/logo.png" alt="logo" /></a>
-                <a class="navbar-brand brand-logo-mini" href=""><img src="~/lib/layoutadmin/assets/images/logo.png" alt="logo" /></a>
+                <a class="navbar-brand brand-logo" asp-area="" asp-controller="Notification" asp-action="NotificationInventory"><img src="~/lib/layoutadmin/assets/images/logo1.svg" alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" asp-area="" asp-controller="Notification" asp-action="NotificationInventory"><img src="~/lib/layoutadmin/assets/images/logo1.svg" alt="logo" /></a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-stretch">
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -28,15 +28,15 @@
                 </button>
                 <ul class="navbar-nav navbar-nav-right">
                     @* <li class="nav-item d-none d-lg-block full-screen-link">
-                        <a class="nav-link" asp-area="" asp-controller="Notification" asp-action="ListNotification">
-                            <i class="mdi mdi-bell-outline"></i>
-                        </a>
+                    <a class="nav-link" asp-area="" asp-controller="Notification" asp-action="ListNotification">
+                    <i class="mdi mdi-bell-outline"></i>
+                    </a>
                     </li>
                     <li class="nav-item d-none d-lg-block full-screen-link">
-                        <a class="nav-link" asp-area="" asp-controller="ScanQR" asp-action="Scan">
-                            <i class="mdi mdi-fullscreen"></i>
+                    <a class="nav-link" asp-area="" asp-controller="ScanQR" asp-action="Scan">
+                    <i class="mdi mdi-fullscreen"></i>
 
-                        </a>
+                    </a>
                     </li> *@
                     <i class="fas fa-plus" asp-area="" asp-controller="Manager" asp-action="CreateClassDetail"></i>
                 </ul>
@@ -62,53 +62,53 @@
                             <span class="menu-title">Quét mã QR</span>
                             <i class="mdi mdi-home menu-icon"></i>
                         </a>
-                    </li>
-                    @*  <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                    <span class="menu-title">None</span>
-                    <i class="mdi mdi-home menu-icon"></i>
-                    </a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                    <span class="menu-title">None</span>
-                    <i class="mdi mdi-home menu-icon"></i>
-                    </a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                    <span class="menu-title">None</span>
-                    <i class="mdi mdi-home menu-icon"></i>
-                    </a>
-                    <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                    <span class="menu-title">none</span>
-                    <i class="mdi mdi-home menu-icon"></i>
-                    </a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                    <span class="menu-title">none</span>
-                    <i class="mdi mdi-home menu-icon"></i>
-                    </a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                    <span class="menu-title">none</span>
-                    <i class="mdi mdi-home menu-icon"></i>
-                    </a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                    <span class="menu-title">none</span>
-                    <i class="mdi mdi-home menu-icon"></i>
-                    </a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="">
-                    <span class="menu-title">Tables</span>
-                    <i class="mdi mdi-table-large menu-icon"></i>
-                    </a>
-                    </li> *@
+                        @* </li> *@
+                        @*  <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">
+                        <span class="menu-title">None</span>
+                        <i class="mdi mdi-home menu-icon"></i>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">
+                        <span class="menu-title">None</span>
+                        <i class="mdi mdi-home menu-icon"></i>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">
+                        <span class="menu-title">None</span>
+                        <i class="mdi mdi-home menu-icon"></i>
+                        </a>
+                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">
+                        <span class="menu-title">none</span>
+                        <i class="mdi mdi-home menu-icon"></i>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">
+                        <span class="menu-title">none</span>
+                        <i class="mdi mdi-home menu-icon"></i>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">
+                        <span class="menu-title">none</span>
+                        <i class="mdi mdi-home menu-icon"></i>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">
+                        <span class="menu-title">none</span>
+                        <i class="mdi mdi-home menu-icon"></i>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="">
+                        <span class="menu-title">Tables</span>
+                        <i class="mdi mdi-table-large menu-icon"></i>
+                        </a>
+                        </li> *@
                 </ul>
             </nav>
             <!-- partial -->
