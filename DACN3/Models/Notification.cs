@@ -12,7 +12,9 @@ public partial class Notification
     public string Description { get; set; } = null!;
 
     public string Image { get; set; } = null!;
+
     public int Amount { get; set; }
+
     public virtual ICollection<Confirmation> Confirmations { get; set; } = new List<Confirmation>();
 
     public virtual BrokenHistory IdBrokenHistoryNavigation { get; set; } = null!;

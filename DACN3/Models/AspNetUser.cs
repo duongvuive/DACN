@@ -10,10 +10,13 @@ public partial class AspNetUser
         AspNetUserClaims = new HashSet<AspNetUserClaim>();
         AspNetUserLogins = new HashSet<AspNetUserLogin>();
         AspNetUserTokens = new HashSet<AspNetUserToken>();
+        Borrows = new HashSet<Borrow>();
         BrokenHistories = new HashSet<BrokenHistory>();
+        ConfirmEquipmentVouchers = new HashSet<ConfirmEquipmentVoucher>();
         Confirmations = new HashSet<Confirmation>();
         EquipmentVouchers = new HashSet<EquipmentVoucher>();
         ImportExportWarehouses = new HashSet<ImportExportWarehouse>();
+        Repairs = new HashSet<Repair>();
         Roles = new HashSet<AspNetRole>();
         UserRoles = new List<AspNetUserRole>();
     }
@@ -38,10 +41,13 @@ public partial class AspNetUser
     public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
     public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
     public virtual ICollection<AspNetUserToken> AspNetUserTokens { get; set; }
+    public virtual ICollection<Borrow> Borrows { get; set; }
     public virtual ICollection<BrokenHistory> BrokenHistories { get; set; }
+    public virtual ICollection<ConfirmEquipmentVoucher> ConfirmEquipmentVouchers { get; set; }
     public virtual ICollection<Confirmation> Confirmations { get; set; }
     public virtual ICollection<EquipmentVoucher> EquipmentVouchers { get; set; }
     public virtual ICollection<ImportExportWarehouse> ImportExportWarehouses { get; set; }
+    public virtual ICollection<Repair> Repairs { get; set; }
 
     public virtual ICollection<AspNetRole> Roles { get; set; }
     public virtual ICollection<AspNetUserRole> UserRoles { get; set; } = new List<AspNetUserRole>();

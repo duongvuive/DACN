@@ -29,6 +29,22 @@ builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<INotificationService, NotificationSercvice>();
 var app = builder.Build();
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/")
+    {
+        var signInManager = context.RequestServices.GetService<SignInManager<IdentityUser>>();
+
+        // Thực hiện logout tài khoản
+        await signInManager.SignOutAsync();
+
+        // Chuyển hướng đến trang đăng nhập
+        context.Response.Redirect("/Identity/Account/Login");
+        return;
+    }
+
+    await next();
+});
 app.MapHub<NotificationHubs>("/notificationHub");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
