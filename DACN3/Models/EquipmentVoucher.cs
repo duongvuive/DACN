@@ -13,5 +13,7 @@ public partial class EquipmentVoucher
 
     public string Reason { get; set; } = null!;
 
+    public virtual ICollection<ConfirmEquipmentVoucher> ConfirmEquipmentVouchers { get; set; } = new List<ConfirmEquipmentVoucher>();
+
     public virtual AspNetUser IdRequesterNavigation { get; set; } = null!;
 }

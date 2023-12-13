@@ -31,11 +31,15 @@ public partial class Qldevice1Context : DbContext
 
     public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
 
+    public virtual DbSet<Borrow> Borrows { get; set; }
+
     public virtual DbSet<BrokenHistory> BrokenHistories { get; set; }
 
     public virtual DbSet<ClassDetail> ClassDetails { get; set; }
 
     public virtual DbSet<Classroom> Classrooms { get; set; }
+
+    public virtual DbSet<ConfirmEquipmentVoucher> ConfirmEquipmentVouchers { get; set; }
 
     public virtual DbSet<Confirmation> Confirmations { get; set; }
 
@@ -44,6 +48,8 @@ public partial class Qldevice1Context : DbContext
     public virtual DbSet<Device> Devices { get; set; }
 
     public virtual DbSet<DeviceClassfication> DeviceClassfications { get; set; }
+
+    public virtual DbSet<DeviceRepairProcess> DeviceRepairProcesses { get; set; }
 
     public virtual DbSet<DeviceWarehouse> DeviceWarehouses { get; set; }
 
@@ -54,6 +60,10 @@ public partial class Qldevice1Context : DbContext
     public virtual DbSet<ImportExportWarehouse> ImportExportWarehouses { get; set; }
 
     public virtual DbSet<Notification> Notifications { get; set; }
+
+    public virtual DbSet<ProcessDevice> ProcessDevices { get; set; }
+
+    public virtual DbSet<Repair> Repairs { get; set; }
 
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
@@ -127,6 +137,7 @@ public partial class Qldevice1Context : DbContext
            .HasForeignKey(ur => ur.UserId)
           .IsRequired();
         });
+
         modelBuilder.Entity<AspNetUserRole>(entity =>
         {
             entity.HasKey(ur => new { ur.UserId, ur.RoleId });
@@ -158,6 +169,39 @@ public partial class Qldevice1Context : DbContext
             entity.Property(e => e.Name).HasMaxLength(128);
 
             entity.HasOne(d => d.User).WithMany(p => p.AspNetUserTokens).HasForeignKey(d => d.UserId);
+        });
+
+        modelBuilder.Entity<Borrow>(entity =>
+        {
+            entity.HasKey(e => e.BorrowId).HasName("PK__Borrow__B7FA24ECBED08EAC");
+
+            entity.ToTable("Borrow");
+
+            entity.Property(e => e.BorrowId)
+                .ValueGeneratedNever()
+                .HasColumnName("Borrow_ID");
+            entity.Property(e => e.BorrowDate)
+                .HasColumnType("date")
+                .HasColumnName("Borrow_Date");
+            entity.Property(e => e.Borrower).HasMaxLength(80);
+            entity.Property(e => e.DeviceClassroomId).HasColumnName("Device_Classroom_ID");
+            entity.Property(e => e.ReturnDate)
+                .HasColumnType("date")
+                .HasColumnName("Return_Date");
+            entity.Property(e => e.Status).HasDefaultValueSql("((0))");
+            entity.Property(e => e.UserId)
+                .HasMaxLength(450)
+                .HasColumnName("User_ID");
+
+            entity.HasOne(d => d.DeviceClassroom).WithMany(p => p.Borrows)
+                .HasForeignKey(d => d.DeviceClassroomId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Borrow__Device_C__345EC57D");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Borrows)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Borrow_AspNetUsers_Id");
         });
 
         modelBuilder.Entity<BrokenHistory>(entity =>
@@ -221,6 +265,30 @@ public partial class Qldevice1Context : DbContext
                 .HasForeignKey(d => d.IdFloor)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Classroom_Floor_ID");
+        });
+
+        modelBuilder.Entity<ConfirmEquipmentVoucher>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Confirm_Equipment_Vouchers_ID");
+
+            entity.ToTable("Confirm_Equipment_Vouchers");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.IdEquipmentVouchers).HasColumnName("ID_Equipment_Vouchers");
+            entity.Property(e => e.IdUserConfirm)
+                .HasMaxLength(450)
+                .HasColumnName("ID_User_Confirm");
+            entity.Property(e => e.Reason).HasMaxLength(450);
+
+            entity.HasOne(d => d.IdEquipmentVouchersNavigation).WithMany(p => p.ConfirmEquipmentVouchers)
+                .HasForeignKey(d => d.IdEquipmentVouchers)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Confirm_Equipment_Vouchers_Equipment_Vouchers_ID");
+
+            entity.HasOne(d => d.IdUserConfirmNavigation).WithMany(p => p.ConfirmEquipmentVouchers)
+                .HasForeignKey(d => d.IdUserConfirm)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Confirm_Equipment_Vouchers_AspNetUsers_Id");
         });
 
         modelBuilder.Entity<Confirmation>(entity =>
@@ -295,6 +363,30 @@ public partial class Qldevice1Context : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Name).HasMaxLength(80);
+        });
+
+        modelBuilder.Entity<DeviceRepairProcess>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Device_Repair_Progress_ID");
+
+            entity.ToTable("Device_Repair_Process");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.ChangeTime)
+                .HasColumnType("datetime")
+                .HasColumnName("Change_Time");
+            entity.Property(e => e.IdProcessDevice).HasColumnName("Id_Process_Device");
+            entity.Property(e => e.IdRepair).HasColumnName("Id_Repair");
+
+            entity.HasOne(d => d.IdProcessDeviceNavigation).WithMany(p => p.DeviceRepairProcesses)
+                .HasForeignKey(d => d.IdProcessDevice)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DeviceLocationHistory_Situation_ID");
+
+            entity.HasOne(d => d.IdRepairNavigation).WithMany(p => p.DeviceRepairProcesses)
+                .HasForeignKey(d => d.IdRepair)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Device_Repair_Progress_Repair_ID");
         });
 
         modelBuilder.Entity<DeviceWarehouse>(entity =>
@@ -396,6 +488,7 @@ public partial class Qldevice1Context : DbContext
             entity.ToTable("Notification");
 
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Amount).HasDefaultValueSql("((1))");
             entity.Property(e => e.Description).HasMaxLength(250);
             entity.Property(e => e.IdBrokenHistory).HasColumnName("ID_Broken_History");
             entity.Property(e => e.Image)
@@ -406,6 +499,50 @@ public partial class Qldevice1Context : DbContext
                 .HasForeignKey(d => d.IdBrokenHistory)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Notification_Broken_History_ID");
+        });
+
+        modelBuilder.Entity<ProcessDevice>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Situation_ID");
+
+            entity.ToTable("Process_Device");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Repair>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Repair__3214EC27A52E06BB");
+
+            entity.ToTable("Repair");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.DeviceClassroomId).HasColumnName("Device_Classroom_ID");
+            entity.Property(e => e.EndDate)
+                .HasColumnType("date")
+                .HasColumnName("End_Date");
+            entity.Property(e => e.RepairSolution)
+                .HasMaxLength(255)
+                .HasColumnName("Repair_Solution");
+            entity.Property(e => e.StartDate)
+                .HasColumnType("date")
+                .HasColumnName("Start_Date");
+            entity.Property(e => e.UserId)
+                .HasMaxLength(450)
+                .HasColumnName("User_ID");
+
+            entity.HasOne(d => d.DeviceClassroom).WithMany(p => p.Repairs)
+                .HasForeignKey(d => d.DeviceClassroomId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Repair__Device_C__251C81ED");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Repairs)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Repair_AspNetUsers_Id");
         });
 
         modelBuilder.Entity<Supplier>(entity =>
