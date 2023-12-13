@@ -1,0 +1,40 @@
+﻿@model DACN3.Models.EquipmentVoucher
+
+@{
+    ViewData["Title"] = "Lý do";
+    Layout = "~/Views/Shared/LayoutInventory.cshtml";
+}
+
+<h4>Phiếu mua thiết bị</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Reson" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+    <label asp-for="Reason" class="control-label">Lý do</label>
+    <textarea asp-for="Reason" class="form-control" rows="5" style="width: 200%;"></textarea>
+    <!-- Đặt giá trị của rows bằng số lớn hơn để có chiều cao lớn hơn -->
+    <span asp-validation-for="Reason" class="text-danger"></span>
+</div>
+
+            <div class="form-group">
+                <input type="submit" value="Gửi" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@* <div>
+    <a asp-action="Index">trở về</a>
+</div> *@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+

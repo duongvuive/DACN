@@ -69,7 +69,7 @@ namespace DACN3.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "Email không được để trống.")]
             [EmailAddress]
             public string Email { get; set; }
 
@@ -77,7 +77,7 @@ namespace DACN3.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "Mật khẩu không được để trống.")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
