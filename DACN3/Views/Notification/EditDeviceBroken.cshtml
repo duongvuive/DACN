@@ -1,0 +1,63 @@
+﻿@model DACN3.Models.ViewModel.DeviceBroken
+
+@{
+    ViewData["Title"] = "EditDeviceBroken";
+}
+
+<h1>EditDeviceBroken</h1>
+
+<h4>DeviceBroken</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditDeviceBroken">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="NameDevice"></label>
+                <input asp-for="NameDevice" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Classroom"></label>
+                <input asp-for="Classroom" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" id="amountInput" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div>
+                <button onclick="ConfirmFunction()">Xác nhận</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function ConfirmFunction() {
+        var amountValue = document.getElementById('amountInput').value; // Lấy giá trị từ trường input
+        var parsedAmount = parseInt(amountValue);
+        fetch('/Notification/Confirm', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ amount: parsedAmount })
+        })
+            .then(response => response.json()) // Chuyển dữ liệu trả về sang dạng JSON
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                } else {
+                    alert("Gửi báo cáo không thành công"); // Hiển thị thông báo
+                }
+            })
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

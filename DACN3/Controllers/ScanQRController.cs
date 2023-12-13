@@ -15,6 +15,10 @@ namespace DACN3.Controllers
             this.manageDevice = manageDevice;
             _notificationService = notificationService;
         }
+        public class QRModel
+        {
+            public string Result { get; set; }
+        }
 
         public IActionResult Scan()
         {
@@ -55,8 +59,10 @@ namespace DACN3.Controllers
             var targetSupplier = manageDevice.Suppliers.FirstOrDefault(c => c.Id == targetDevice.IdSupplier);
             var targetQuantify = manageDevice.ClassDetails.FirstOrDefault(c => c.IdClassroom == classroomID && c.IdDevice == deviceID);
             var Name = $"{targetArea.Name} - {tagetFloor.Name} -{targetClass.Name}";
-            TempData["DeviceID"] = resultID.Id;
+            TempData["DeviceID"] = resultID.IdDevice;
+            TempData["classDetailID"] = resultID.Id;
             TempData["NameClass"] = Name;
+            HttpContext.Session.SetString("NameClass", Name);
             if (targetArea != null && tagetFloor != null && targetClass != null && targetDevice != null && targetClassfication != null && targetSupplier != null && targetQuantify != null)
             {
                 var DetailOfDevice = new DetailOfDevice
@@ -81,9 +87,6 @@ namespace DACN3.Controllers
         {
             return View();
         }
-        public class QRModel
-        {
-            public string Result { get; set; }
-        }
+        
     }
 }

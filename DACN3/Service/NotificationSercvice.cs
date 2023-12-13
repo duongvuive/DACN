@@ -15,11 +15,11 @@ namespace DACN3.Service
             _httpContextAccessor = httpContextAccessor;
             _context = context;
         }
-        public  void  CreateBrokenHistory(string senderID, int deviceID)
+        public  void  CreateBrokenHistory(string senderID, int classDetailsID)
         {
 
             var newBrokenHistory = new BrokenHistory { 
-                DeviceClassroomId = deviceID,
+                DeviceClassroomId = classDetailsID,
                 Timestamp = DateTime.Now,
                 SenderId = senderID,
             };
@@ -27,18 +27,7 @@ namespace DACN3.Service
             _context.SaveChanges();
         }
 
-        public void CreateNotifications( int IdHistory, string information,string image)
-        {
-            var newNotification = new Notification
-            {
-                
-                IdBrokenHistory = IdHistory,
-                Description = information,
-                Image=image
-            };
-            _context.Notifications.Add(newNotification);
-            _context.SaveChanges();
-        }
+
 
     }
 }

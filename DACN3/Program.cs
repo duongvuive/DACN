@@ -24,6 +24,7 @@ builder.Services.AddControllersWithViews();
 
 
 builder.Services.AddSignalR();
+builder.Services.AddSession();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<INotificationService, NotificationSercvice>();
@@ -43,7 +44,7 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthentication();

@@ -57,8 +57,6 @@ namespace WebApplication2.Controllers
                                     string base64String = Convert.ToBase64String(imgBytes, 0, imgBytes.Length);
                                     string imageUrl = string.Concat("data:image/jpg;base64,", base64String);
 
-                                    // Code to store into database
-                                    // save filename and image url(base 64 string) to the database
                                 }
                             }
                         }
