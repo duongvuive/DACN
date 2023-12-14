@@ -79,7 +79,7 @@ namespace DACN3.Controllers
                       .Select(b => b.Id)
                       .FirstOrDefault();
                     var date = _context.BrokenHistories.FirstOrDefault(x => x.Id == latestBrokenHistoryId);
-                    string information = $"Người gửi: {sender_name} báo cáo về thiết bị hư tại phòng học : {storedNameNotification} ngày gửi báo cáo :{date.Timestamp}";
+                    string information = $"Người gửi: {sender_name} báo cáo về thiết bị hư tại phòng học : {storedNameNotification}";
                     CreateNotification(ImageNotification, latestBrokenHistoryId, information,amount);
                     _hubContext.Clients.User(Validator_ID).SendAsync("ReceiveNotification", information);
                     return Json(new { success = true, message = "Gửi báo cáo thành công" });
@@ -101,71 +101,39 @@ namespace DACN3.Controllers
                 _context.Notifications.Add(newNotification);
                 _context.SaveChanges();
             }
-           
+
         }
-        /*   [HttpPost]    
-           public IActionResult Report(int amount)
-           {
-                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                 int deviceID =int.Parse(TempData["DeviceID"].ToString());
-
-                 if (!string.IsNullOrEmpty(userId))
-                   {
-                           string id_sender = userId.ToString();
-                           var account = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
-                           var storedName = TempData["NameClass"] as string;
-                           var Image = TempData["image"] as string;
-                           string sender_name = account.UserName;
-                           var role = _context.AspNetRoles.FirstOrDefault(x => x.Name == "Inventory Management");
-                           var RoleUser = _context.AspNetUserRoles.FirstOrDefault(X => X.RoleId == role.Id);
-                           string Validator_ID = RoleUser.UserId.ToString();
-                           amount = int.Parse(Request.Form["Amount"]);
-
-                  if (deviceID != 0 || id_sender != null)
-                   {
-                       _notificationSercvice.CreateBrokenHistory(id_sender, deviceID);
-
-                       int latestBrokenHistoryId = _context.BrokenHistories
-                         .Where(b => b.SenderId == id_sender && b.DeviceClassroomId == deviceID)
-                         .OrderByDescending(b => b.Timestamp)
-                         .Select(b => b.Id)
-                         .FirstOrDefault();
-                       var date = _context.BrokenHistories.FirstOrDefault(x => x.Id == latestBrokenHistoryId);
-                       string information = $"Người gửi: {sender_name} báo cáo về thiết bị hư tại phòng học : {storedName} ngày gửi báo cáo :{date.Timestamp}";
-                       CreateNotification(Image, latestBrokenHistoryId, information);
-                       var targetDevice = _context.Devices.FirstOrDefault(c => c.Id == deviceID);
-                       var newViewDeviceBroken = new DeviceBroken
-                       {
-                           Image = Image,
-                           NameDevice = targetDevice.Name,
-                           Classroom = storedName,
-                           Amount = 1,
-
-                       };
-
-                       _hubContext.Clients.User(Validator_ID).SendAsync("ReceiveNotification", information);
-                       return View();
-                   }
-               }
-
-               return View();
-           }*/
-
-        
-
         [Authorize(Roles = "Inventory Management")]
         public IActionResult NotificationInventory()
         {
             return View();
         }
-       /* public IActionResult ListNotification(int? Page)
+        [Authorize(Roles = "Inventory Management")]
+        public IActionResult ListNotification(int? Page)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            List<BrokenHistoryNotification> newBrokenHistoryNotifications = new List<BrokenHistoryNotification>();
+            foreach (var brokenHistory in _context.BrokenHistories.ToList())
+            {
+                var notification = _context.Notifications.FirstOrDefault(x => x.IdBrokenHistory == brokenHistory.Id);
+                var newBrokenHistoryNotification = new BrokenHistoryNotification
+                {
+                    Id = notification.Id,
+                    Timestamp = brokenHistory.Timestamp,
+                    Description=notification.Description, 
+                    Image = notification.Image,
+                    amount = notification.Amount,
+                    
+                };
+                newBrokenHistoryNotifications.Add(newBrokenHistoryNotification);
+            }
             int pageSize = 8;
             int pageNumber = Page == null || Page < 0 ? 1 : Page.Value;
-            var lstNotification = _context.Notifications.Where(x => x. == userId).ToList();
-            PagedList<Notification> lst = new PagedList<Notification>(lstNotification, pageNumber, pageSize);
-            return View(lstNotification);
-        }*/
+            PagedList<BrokenHistoryNotification> lst = new PagedList<BrokenHistoryNotification>(newBrokenHistoryNotifications, pageNumber, pageSize);
+            return View(lst);
+        }
+        public IActionResult ConfirmNotification()
+        {
+            return View();
+        }
     }
 }

@@ -26,6 +26,14 @@ namespace DACN3.Service
             _context.BrokenHistories.Add(newBrokenHistory);
             _context.SaveChanges();
         }
+        public bool IsConfirm(int Status)
+        {
+            if (Status == 0)
+            {
+                return false;
+            }
+            return true;
+        }
 
 
 
