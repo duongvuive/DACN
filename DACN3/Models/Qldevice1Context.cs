@@ -561,12 +561,12 @@ public partial class Qldevice1Context : DbContext
 
         modelBuilder.Entity<Warehouse>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_Warehouse_ID");
-
             entity.ToTable("Warehouse");
 
             entity.Property(e => e.Id).HasColumnName("ID");
+
             entity.Property(e => e.Address).HasMaxLength(150);
+
             entity.Property(e => e.Name)
                 .HasMaxLength(70)
                 .HasColumnName("NAME");
