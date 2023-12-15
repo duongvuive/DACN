@@ -139,6 +139,32 @@ namespace DACN3.Controllers
             string reason = null;
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _notificationSercvice.CreateConfirm(userId, id, value, reason);
+            var notification = _context.Notifications.FirstOrDefault(x => x.Id == id);
+            int DeviceID = _context.BrokenHistories
+                    .Where(bh => bh.Id == notification.IdBrokenHistory)
+                    .Join(
+                        _context.ClassDetails,
+                        bh => bh.DeviceClassroomId,
+                        cd => cd.Id,
+                        (bh, cd) => new { BrokenHistory = bh, ClassDetail = cd }
+                    )
+                    .Select(result => result.ClassDetail.IdDevice)
+                    .FirstOrDefault();
+            var Warehouse=_context.DeviceWarehouses.FirstOrDefault(x => x.IdDevice == DeviceID);
+            if (_notificationSercvice.IsWareHouse(Warehouse.Quantity,notification.Amount) == false) { 
+                int numverWarehouse=Warehouse.Quantity;
+                int sub=notification.Amount- numverWarehouse;
+                string description=$"{notification.Description} (số lượng thiết bị được duyệt {numverWarehouse} và đây là số lượng còn thiếu {sub} )";
+                Warehouse.Quantity = Warehouse.Quantity- numverWarehouse;
+                notification.Description = description;
+                _context.SaveChanges();
+            }
+            else
+            {
+                int sub=Warehouse.Quantity-notification.Amount;
+                Warehouse.Quantity = sub;
+                _context.SaveChanges();
+            }
             return Ok();
         }
 

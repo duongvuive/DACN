@@ -26,13 +26,16 @@ namespace DACN3.Service
             _context.BrokenHistories.Add(newBrokenHistory);
             _context.SaveChanges();
         }
-        public bool IsWareHouse(int Status)
+        public bool IsWareHouse(int amountStorehouse,int NumberOfRequest)
         {
-            if (Status == 0)
+            int subtraction = amountStorehouse - NumberOfRequest;
+            if (subtraction < 0)
             {
                 return false;
-            }
-            return true;
+            } 
+            else 
+                return true;
+            
         }
         public void CreateConfirm(string UserSenderID, int ConfirmationTableID, bool Status, string Reason)
         {
