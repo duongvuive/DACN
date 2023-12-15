@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/LayoutInventory.cshtml";
 }
 
-<h1>Danh sách báo cáo</h1>
+<h1>ListNotification</h1>
 
 <table class="table">
     <thead>
@@ -20,10 +20,13 @@
                 Mô tả
             </th>
             <th>
-               Hình ảnh
+                Hình ảnh
             </th>
             <th>
                 Số lượng
+            </th>
+            <th>
+                Trạng thái
             </th>
             <th></th>
         </tr>
@@ -48,11 +51,62 @@
                     @Html.DisplayFor(modelItem => item.amount)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    <button class="confirm-notification" data-id="@item.Id" data-value="true">Duyệt</button>
+                    <button class="cancel-notification" data-id="@item.Id" data-value="false">Hủy</button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).on('click', '.confirm-notification', function () {
+        var notificationId = $(this).data('id');
+        var value = $(this).data('value');
+
+        $.ajax({
+            url: "/Notification/ConfirmNotification",
+            method: "POST",
+            data: { id: notificationId, value: value },
+            success: function (response) {
+                console.log("Yêu cầu đã được gửi thành công");
+                alert("Xác nhận thay đổi tình trạng thành công");
+                location.reload(); // Tải lại trang sau khi xác nhận thành công
+            },
+            error: function (error) {
+                // Xử lý lỗi nếu có
+                console.log("Đã xảy ra lỗi: " + error);
+            }
+        });
+    });
+
+    $(document).on('click', '.cancel-notification', function () {
+        var notificationId = $(this).data('id');
+        var value = $(this).data('value');
+        var reason = prompt("Vui lòng nhập lý do hủy");
+
+        if (reason === null || reason.trim() === '') {
+            alert("Vui lòng nhập lý do hủy!");
+        } else {
+            $.ajax({
+                url: "/Notification/CancelNotification",
+                method: "POST",
+                data: { id: notificationId, value: value, Reason: reason },
+                success: function (response) {
+                    console.log("Dữ liệu đã được chuyển thành công");
+                    location.reload();
+                },
+                error: function (error) {
+                    console.log("Đã xảy ra lỗi: " + error);
+                }
+            });
+        }
+    });
+
+
+
+
+</script>
