@@ -1,29 +1,32 @@
 ﻿
 <body class="container">
-    <div class="col-md-6" style="padding-top: 50px;">
-        <div class="panel panel-default">
-            <div class="panel-heading">Live Web Camera</div>
-            <div class="panel-body">
-                <div id="LiveCamera" style="margin-bottom: 50px;"></div>
-                <form>
-                    <!-- Chức năng chụp ảnh -->
-                    <input type="button" class="btn btn-primary" value="Capture Snapshot" onClick="CaptureSnapshot()">
-                    <!-- Nút để lưu ảnh đã chụp -->
-                    <input type="button" class="btn btn-success" value="Save Snapshot" onClick="SaveSnapshot()">
-                </form>
+    <div class="row">
+        <div class="col-md-6" style="padding-top: 50px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">Khung chụp hình</div>
+                <div class="panel-body">
+                    <div id="LiveCamera" style="margin-bottom: 50px;"></div>
+                    <form>
+                        <!-- Chức năng chụp ảnh -->
+                        <input type="button" class="btn btn-primary" value="Chụp ảnh" onClick="CaptureSnapshot()">
+                        <!-- Nút để lưu ảnh đã chụp -->
+                        <input type="button" class="btn btn-success" value="Lưu ảnh" onClick="SaveSnapshot()">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" style="padding-top: 50px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">Ảnh đã được chụp</div>
+                <div class="panel-body">
+                    <div id="results">Ảnh bạn mới chụp sẽ xuất hiện ở đây...</div>
+                </div>
+                <br />
+                <br />
             </div>
         </div>
     </div>
-    <div class="col-md-6" style="padding-top: 50px;">
-        <div class="panel panel-default">
-            <div class="panel-heading">Captured Snapshot/Image</div>
-            <div class="panel-body">
-                <div id="results">Your snapshot will appear here...</div>
-            </div>
-            <br />
-            <br />
-        </div>
-    </div>
+
 
     <!-- Include the Webcam.js JavaScript Library -->
     <script src="/js/webcam.js"></script>

@@ -11,7 +11,7 @@ namespace DACN3.Controllers
 {
 
 
-/*    [Authorize(Roles = "Admin")]*/
+
 
 
     public class HomeController : Controller
@@ -29,8 +29,9 @@ namespace DACN3.Controllers
         {
             return View();
         }
+        [Authorize(Roles = "Admin")]
         [Route("taikhoan")]
-        public IActionResult TaiKhoan(string searchString,int? Page, string sortOrder)
+        public IActionResult TaiKhoan(string searchString, int? Page, string sortOrder)
         {
             int pageSize = 8;
             int pageNumber = Page == null || Page < 0 ? 1 : Page.Value;
@@ -47,7 +48,7 @@ namespace DACN3.Controllers
                 case "name_desc":
                     lstTaiKhoan = lstTaiKhoan.OrderByDescending(l => l.UserName).ToList();
                     break;
-                /*mặc định là từ a-z*/   
+                /*mặc định là từ a-z*/
                 default:
                     lstTaiKhoan = lstTaiKhoan.OrderBy(l => l.UserName).ToList();
                     break;

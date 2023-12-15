@@ -37,7 +37,8 @@ namespace WebApplication2.Controllers
                             var fileNameToStore = string.Concat(Convert.ToString(Guid.NewGuid()), Path.GetExtension(fileName));
                             //  Path to store the snapshot in local folder
                             var filepath = Path.Combine(_environment.WebRootPath, "CameraPhotos") + $@"\{fileNameToStore}";
-                            TempData["image"] = filepath;
+                            var savePath = $"~/cameraphotos/{fileNameToStore}";
+                            TempData["image"] = savePath;
                             // Save image file in local folder
                             if (!string.IsNullOrEmpty(filepath))
                             {

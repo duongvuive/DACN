@@ -2,9 +2,10 @@
 
 @{
     ViewData["Title"] = "ListNotification";
+    Layout = "~/Views/Shared/LayoutInventory.cshtml";
 }
 
-<h1>ListNotification</h1>
+<h1>Danh sách báo cáo</h1>
 
 <table class="table">
     <thead>
@@ -13,99 +14,45 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Timestamp)
+                Thời gian
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Mô tả
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Image)
+               Hình ảnh
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
+                Số lượng
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Timestamp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
                 <td>
-                    <button class="confirm-notification" data-id="@item.Id" data-value="true">Duyệt</button>
-                    <button class="cancel-notification" data-id="@item.Id" data-value="false">Hủy</button>
+                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
-        </tr>
-}
+                <td>
+                    @Html.DisplayFor(modelItem => item.Timestamp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <img src="@Url.Content(item.Image)" alt="Image" style="max-width: 100px; max-height: 100px;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.amount)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
-<script src="/lib/jquery/dist/jquery.min.js"></script>
-<script>
-    $(document).on('click', '.confirm-notification', function () {
-        var notificationId = $(this).data('id');
-        var value = $(this).data('value');
-
-        $.ajax({
-            url: "/Notification/ConfirmNotification",
-            method: "POST",
-            data: { id: notificationId, value: value },
-            success: function (response) {
-                console.log("Yêu cầu đã được gửi thành công");
-                alert("Xác nhận thay đổi tình trạng thành công");
-                location.reload(); // Tải lại trang sau khi xác nhận thành công
-            },
-            error: function (error) {
-                // Xử lý lỗi nếu có
-                console.log("Đã xảy ra lỗi: " + error);
-            }
-        });
-    });
-
-    $(document).on('click', '.cancel-notification', function () {
-        var notificationId = $(this).data('id');
-        var value = $(this).data('value');
-        var reason = prompt("Vui lòng nhập lý do hủy");
-
-        if (reason === null || reason.trim() === '') {
-            alert("Vui lòng nhập lý do hủy!");
-        } else { 
-            $.ajax({
-                url: "/Notification/CancelNotification",
-                method: "POST",
-                data: { id: notificationId, value: value, Reason: reason },
-                success: function (response) {
-                    console.log("Dữ liệu đã được chuyển thành công");
-                    location.reload();
-                },
-                error: function (error) {
-                    console.log("Đã xảy ra lỗi: " + error);
-                }
-            });
-        }
-    });
-
-
-
-
-</script>
-

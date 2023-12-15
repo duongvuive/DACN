@@ -1,39 +1,43 @@
 ﻿@model DACN3.Models.ViewModel.DeviceBroken
 
 @{
-    ViewData["Title"] = "Report";
+    ViewData["Title"] = "Báo cáo";
+
 }
 
-<h1>Report</h1>
+<h1>Báo cáo</h1>
 
 <div>
-    <h4>DeviceBroken</h4>
+    <h4>Thông tin thiết bị</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Image)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image)
+        <dd class="col-sm-10">
+
+            <img src="@Url.Content(Model.Image)" alt="Image" style="max-width: 400px; max-height: 400px;" />
+
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NameDevice)
+
+        <dt class="col-sm-2">
+            Tên thiết bị
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.NameDevice)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Classroom)
+        <dt class="col-sm-2">
+            Phòng
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Classroom)
         </dd>
-        <dt class="col-sm-2" >
-            @Html.DisplayNameFor(model => model.Amount)
-        </dt>
-        <div class="form-group">
-            <label asp-for="Amount" class="control-label"></label>
-            <input id="amountInput" asp-for="Amount" class="form-control" />
+        @* <dt class="col-sm-2">
+        Số lượng
+        </dt> *@
+        <div class="form-group-sm">
+            <label asp-for="Amount" class="control-label">Số lượng</label>
+            <input id="amountInput" asp-for="Amount" class="form-control-sm" />
             <span asp-validation-for="Amount" class="text-danger"></span>
         </div>
     </dl>
@@ -59,6 +63,7 @@
             .then(data => {
                 if (data.success) {
                     alert(data.message);
+                    window.location.href = '/Manager/ManagerStaff';
                 } else {
                     alert(data.message);
                 }
