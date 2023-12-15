@@ -1,31 +1,32 @@
 ﻿@model IEnumerable<DACN3.Models.ViewModel.NotificationDevice>
 
 @{
-    ViewData["Title"] = "ListNotificationManager";
+    ViewData["Title"] = "Danh sách báo cáo";
+    Layout = "~/Views/Shared/LayoutManager.cshtml";
 }
 
-<h1>ListNotificationManager</h1>
+<h1>Danh sách báo cáo</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Timestamp)
+                Thời gian
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Mô tả
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Image)
+                Hình ảnh
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.amount)
+                Số lượng
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                Trạng thái
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Reason)
+                Lý do
             </th>
             <th></th>
         </tr>
@@ -37,10 +38,12 @@
                 @Html.DisplayFor(modelItem => item.Timestamp)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                <div class="description-container">
+                    @Html.DisplayFor(modelItem => item.Description)
+                </div>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Image)
+                <img src="@Url.Content(item.Image)" alt="Image" style="max-width: 100px; max-height: 100px;" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.amount)
@@ -55,3 +58,14 @@
 }
     </tbody>
 </table>
+<style>
+    .description-container {
+        max-height: 50px; /* Chiều cao tối đa của mô tả khi thu gọn */
+        overflow: hidden;
+    }
+
+    .expanded {
+        max-height: none; /* Loại bỏ giới hạn chiều cao khi mở rộng */
+    }
+
+</style>
