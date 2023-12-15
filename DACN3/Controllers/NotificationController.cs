@@ -5,11 +5,8 @@ using DACN3.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.VisualBasic;
 using PagedList;
 using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
-using static DACN3.Controllers.ScanQRController;
 
 namespace DACN3.Controllers
 {
@@ -49,7 +46,7 @@ namespace DACN3.Controllers
                 TempData["NameClassNotification"] = storedName;
                 return View(newViewDeviceBroken);
             }
-            
+
             return View();
         }
 
@@ -80,12 +77,12 @@ namespace DACN3.Controllers
                       .FirstOrDefault();
                     var date = _context.BrokenHistories.FirstOrDefault(x => x.Id == latestBrokenHistoryId);
                     string information = $"Người gửi: {sender_name} báo cáo về thiết bị hư tại phòng học : {storedNameNotification}";
-                    CreateNotification(ImageNotification, latestBrokenHistoryId, information,amount);
+                    CreateNotification(ImageNotification, latestBrokenHistoryId, information, amount);
                     _hubContext.Clients.User(Validator_ID).SendAsync("ReceiveNotification", information);
                     return Json(new { success = true, message = "Gửi báo cáo thành công" });
                 }
             }
-             return Json(new { success = false, message = "Gửi báo cáo không thành công" });
+            return Json(new { success = false, message = "Gửi báo cáo không thành công" });
         }
         private void CreateNotification(string? Image, int latestBrokenHistoryId, string information, int amount)
         {
@@ -115,25 +112,44 @@ namespace DACN3.Controllers
             foreach (var brokenHistory in _context.BrokenHistories.ToList())
             {
                 var notification = _context.Notifications.FirstOrDefault(x => x.IdBrokenHistory == brokenHistory.Id);
-                var newBrokenHistoryNotification = new BrokenHistoryNotification
+                var confirmationNotification = _context.Confirmations.FirstOrDefault(x => x.IdNotification == notification.Id);
+                if (confirmationNotification == null)
                 {
-                    Id = notification.Id,
-                    Timestamp = brokenHistory.Timestamp,
-                    Description=notification.Description, 
-                    Image = notification.Image,
-                    amount = notification.Amount,
-                    
-                };
-                newBrokenHistoryNotifications.Add(newBrokenHistoryNotification);
+                    var newBrokenHistoryNotification = new BrokenHistoryNotification
+                    {
+                        Id = notification.Id,
+                        Timestamp = brokenHistory.Timestamp,
+                        Description = notification.Description,
+                        Image = notification.Image,
+                        amount = notification.Amount,
+                        Status ="Tình trạng đang xét duyệt"
+                    };
+                    newBrokenHistoryNotifications.Add(newBrokenHistoryNotification);
+                }
+                
             }
             int pageSize = 8;
             int pageNumber = Page == null || Page < 0 ? 1 : Page.Value;
             PagedList<BrokenHistoryNotification> lst = new PagedList<BrokenHistoryNotification>(newBrokenHistoryNotifications, pageNumber, pageSize);
             return View(lst);
         }
-        public IActionResult ConfirmNotification()
+        [HttpPost]
+        public IActionResult ConfirmNotification(int id, bool value)
         {
-            return View();
+            string reason = null;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _notificationSercvice.CreateConfirm(userId, id, value, reason);
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult CancelNotification(int id, bool value, string Reason)
+        {
+         
+             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _notificationSercvice.CreateConfirm(userId, id, value, Reason);
+
+            return Ok();
         }
     }
 }

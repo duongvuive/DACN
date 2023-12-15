@@ -6,6 +6,7 @@ namespace DACN3.Service
     public interface INotificationService
     {
         void CreateBrokenHistory(string senderID, int classDetailsID);
-        bool IsConfirm(int Status);
+        bool IsWareHouse(int Status);
+        void CreateConfirm(string UserSenderID, int ConfirmationTableID, bool Status, string Reason);
     }
 }

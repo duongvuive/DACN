@@ -13,7 +13,7 @@ public partial class Confirmation
 
     public bool? ConfirmationStatus { get; set; }
 
-    public string Reason { get; set; } = null!;
+    public string ? Reason { get; set; } 
 
     public virtual Notification IdNotificationNavigation { get; set; } = null!;
 

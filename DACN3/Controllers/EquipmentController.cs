@@ -51,7 +51,7 @@ namespace DACN3.Controllers
                 // Trả về đoạn script trong một ContentResult
                 var script = @"
                 <script charset='UTF-8'>
-                    alert('Thanh cong.');
+                    alert('Thành công.');
                     window.location.href = '/Equipment/Reson'; // Đường dẫn đến trang Reson
                 </script>";
                 return Content(script, "text/html");

@@ -26,7 +26,7 @@ namespace DACN3.Service
             _context.BrokenHistories.Add(newBrokenHistory);
             _context.SaveChanges();
         }
-        public bool IsConfirm(int Status)
+        public bool IsWareHouse(int Status)
         {
             if (Status == 0)
             {
@@ -34,7 +34,31 @@ namespace DACN3.Service
             }
             return true;
         }
-
+        public void CreateConfirm(string UserSenderID, int ConfirmationTableID, bool Status, string Reason)
+        {
+            if(Status== true)
+            {
+                var newConfirmation = new Confirmation
+                {
+                    IdNotification=ConfirmationTableID,
+                    IdUserConfirms=UserSenderID,
+                    ConfirmationStatus=Status,   
+                };
+                _context.Confirmations.Add(newConfirmation);
+                _context.SaveChanges();
+            }
+            else if(Status== false) {
+                var newConfirmation = new Confirmation
+                {
+                    IdNotification = ConfirmationTableID,
+                    IdUserConfirms = UserSenderID,
+                    ConfirmationStatus = Status,
+                    Reason = Reason
+                };
+                _context.Confirmations.Add(newConfirmation);
+                _context.SaveChanges();
+            }
+        }
 
 
     }
