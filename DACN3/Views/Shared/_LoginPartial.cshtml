@@ -6,7 +6,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Xin chào @User.Identity?.Name!</a>
+        <a  class="nav-link text-dark" asp-area="Identity" asp-page="" title="Manage">Xin chào @User.Identity?.Name!</a>
     </li>
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" method="post">
             <button type="submit" class="mdi mdi-power"></button>
