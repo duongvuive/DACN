@@ -9,11 +9,6 @@ using System.Diagnostics;
 
 namespace DACN3.Controllers
 {
-
-
-
-
-
     public class HomeController : Controller
     {
         Qldevice1Context db = new Qldevice1Context();

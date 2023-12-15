@@ -14,9 +14,6 @@
                 Thời gian
             </th>
             <th>
-                Mô tả
-            </th>
-            <th>
                 Hình ảnh
             </th>
             <th>
@@ -36,11 +33,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Timestamp)
-            </td>
-            <td>
-                <div class="description-container">
-                    @Html.DisplayFor(modelItem => item.Description)
-                </div>
             </td>
             <td>
                 <img src="@Url.Content(item.Image)" alt="Image" style="max-width: 100px; max-height: 100px;" />

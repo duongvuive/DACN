@@ -109,7 +109,11 @@ namespace DACN3.Controllers
         public IActionResult ListNotification()
         {
             List<BrokenHistoryNotification> newBrokenHistoryNotifications = new List<BrokenHistoryNotification>();
-            foreach (var brokenHistory in _context.BrokenHistories.ToList())
+            var brokenHistoriesWithNotifications = _context.BrokenHistories
+                                                       .Where(brokenHistory => _context.Notifications.Any(notification => notification.IdBrokenHistory == brokenHistory.Id))
+                                                       .ToList();
+
+            foreach (var brokenHistory in brokenHistoriesWithNotifications)
             {
                 var notification = _context.Notifications.FirstOrDefault(x => x.IdBrokenHistory == brokenHistory.Id);
                 var confirmationNotification = _context.Confirmations.FirstOrDefault(x => x.IdNotification == notification.Id);
@@ -140,6 +144,7 @@ namespace DACN3.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _notificationSercvice.CreateConfirm(userId, id, value, reason);
             var notification = _context.Notifications.FirstOrDefault(x => x.Id == id);
+            var confirm = _context.Confirmations.FirstOrDefault(x => x.IdNotification == notification.Id);
             int DeviceID = _context.BrokenHistories
                     .Where(bh => bh.Id == notification.IdBrokenHistory)
                     .Join(
@@ -154,9 +159,9 @@ namespace DACN3.Controllers
             if (_notificationSercvice.IsWareHouse(Warehouse.Quantity,notification.Amount) == false) { 
                 int numverWarehouse=Warehouse.Quantity;
                 int sub=notification.Amount- numverWarehouse;
-                string description=$"{notification.Description} (số lượng thiết bị được duyệt {numverWarehouse} và đây là số lượng còn thiếu {sub} )";
+                string description=$"số lượng thiết bị được duyệt {numverWarehouse} và đây là số lượng còn thiếu {sub} )";
                 Warehouse.Quantity = Warehouse.Quantity- numverWarehouse;
-                notification.Description = description;
+                confirm.Reason = description;
                 _context.SaveChanges();
             }
             else
@@ -181,7 +186,11 @@ namespace DACN3.Controllers
         public IActionResult ListNotificationManager()
         {
             List<NotificationDevice> newNotificationDevices = new List<NotificationDevice>();
-            foreach (var brokenHistory in _context.BrokenHistories.ToList())
+            var brokenHistoriesWithNotifications = _context.BrokenHistories
+                                                        .Where(brokenHistory => _context.Notifications.Any(notification => notification.IdBrokenHistory == brokenHistory.Id))
+                                                        .ToList();
+
+            foreach (var brokenHistory in brokenHistoriesWithNotifications)
             {
                 var notification = _context.Notifications.FirstOrDefault(x => x.IdBrokenHistory == brokenHistory.Id);
                 var confirmationNotification = _context.Confirmations.FirstOrDefault(x => x.IdNotification == notification.Id);
@@ -190,7 +199,6 @@ namespace DACN3.Controllers
                     var newNotificationDevice = new NotificationDevice
                     {
                         Timestamp = brokenHistory.Timestamp,
-                        Description = notification.Description,
                         Image = notification.Image,
                         amount = notification.Amount,
                         Status = "Tình trạng đang xét duyệt"
@@ -201,10 +209,10 @@ namespace DACN3.Controllers
                     var  newNotificationDevice = new NotificationDevice
                     {
                         Timestamp = brokenHistory.Timestamp,
-                        Description = notification.Description,
                         Image = notification.Image,
                         amount = notification.Amount,
-                        Status = "Được xét duyệt"
+                        Status = "Được xét duyệt",
+                        Reason=confirmationNotification.Reason
                     };
                     newNotificationDevices.Add(newNotificationDevice);
                 }else if (confirmationNotification.ConfirmationStatus == false)
@@ -212,7 +220,6 @@ namespace DACN3.Controllers
                     var newNotificationDevice = new NotificationDevice
                     {
                         Timestamp = brokenHistory.Timestamp,
-                        Description = notification.Description,
                         Image = notification.Image,
                         amount = notification.Amount,
                         Status = "Hủy",
