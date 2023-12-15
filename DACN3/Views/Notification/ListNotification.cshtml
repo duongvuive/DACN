@@ -10,9 +10,9 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+@*             <th>
                 @Html.DisplayNameFor(model => model.Id)
-            </th>
+            </th> *@
             <th>
                 Thời gian
             </th>
@@ -35,9 +35,9 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+@*                 <td>
                     @Html.DisplayFor(modelItem => item.Id)
-                </td>
+                </td> *@
                 <td>
                     @Html.DisplayFor(modelItem => item.Timestamp)
                 </td>

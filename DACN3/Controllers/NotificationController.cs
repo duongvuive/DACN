@@ -177,5 +177,56 @@ namespace DACN3.Controllers
 
             return Ok();
         }
+        [Authorize(Roles = "Manager")]
+        public IActionResult ListNotificationManager(int? Page)
+        {
+            List<NotificationDevice> newNotificationDevices = new List<NotificationDevice>();
+            foreach (var brokenHistory in _context.BrokenHistories.ToList())
+            {
+                var notification = _context.Notifications.FirstOrDefault(x => x.IdBrokenHistory == brokenHistory.Id);
+                var confirmationNotification = _context.Confirmations.FirstOrDefault(x => x.IdNotification == notification.Id);
+                if (confirmationNotification == null)
+                {
+                    var newNotificationDevice = new NotificationDevice
+                    {
+                        Timestamp = brokenHistory.Timestamp,
+                        Description = notification.Description,
+                        Image = notification.Image,
+                        amount = notification.Amount,
+                        Status = "Tình trạng đang xét duyệt"
+                    };
+                    newNotificationDevices.Add(newNotificationDevice);
+                }else if (confirmationNotification.ConfirmationStatus == true)
+                {
+                    var  newNotificationDevice = new NotificationDevice
+                    {
+                        Timestamp = brokenHistory.Timestamp,
+                        Description = notification.Description,
+                        Image = notification.Image,
+                        amount = notification.Amount,
+                        Status = "Được xét duyệt"
+                    };
+                    newNotificationDevices.Add(newNotificationDevice);
+                }else if (confirmationNotification.ConfirmationStatus == false)
+                {
+                    var newNotificationDevice = new NotificationDevice
+                    {
+                        Timestamp = brokenHistory.Timestamp,
+                        Description = notification.Description,
+                        Image = notification.Image,
+                        amount = notification.Amount,
+                        Status = "Hủy",
+                        Reason=confirmationNotification.Reason
+                    };
+                    newNotificationDevices.Add(newNotificationDevice);
+                }
+
+            }
+            int pageSize = 8;
+            int pageNumber = Page == null || Page < 0 ? 1 : Page.Value;
+            PagedList<NotificationDevice> lst = new PagedList<NotificationDevice>(newNotificationDevices, pageNumber, pageSize);
+            return View(lst);
+        }
+
     }
 }
