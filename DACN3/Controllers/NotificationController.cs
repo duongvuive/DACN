@@ -106,7 +106,7 @@ namespace DACN3.Controllers
             return View();
         }
         [Authorize(Roles = "Inventory Management")]
-        public IActionResult ListNotification(int? Page)
+        public IActionResult ListNotification()
         {
             List<BrokenHistoryNotification> newBrokenHistoryNotifications = new List<BrokenHistoryNotification>();
             foreach (var brokenHistory in _context.BrokenHistories.ToList())
@@ -128,10 +128,10 @@ namespace DACN3.Controllers
                 }
                 
             }
-            int pageSize = 8;
+           /* int pageSize = 8;
             int pageNumber = Page == null || Page < 0 ? 1 : Page.Value;
-            PagedList<BrokenHistoryNotification> lst = new PagedList<BrokenHistoryNotification>(newBrokenHistoryNotifications, pageNumber, pageSize);
-            return View(lst);
+            PagedList<BrokenHistoryNotification> lst = new PagedList<BrokenHistoryNotification>(newBrokenHistoryNotifications, pageNumber, pageSize);*/
+            return View(newBrokenHistoryNotifications);
         }
         [HttpPost]
         public IActionResult ConfirmNotification(int id, bool value)
@@ -178,7 +178,7 @@ namespace DACN3.Controllers
             return Ok();
         }
         [Authorize(Roles = "Manager")]
-        public IActionResult ListNotificationManager(int? Page)
+        public IActionResult ListNotificationManager()
         {
             List<NotificationDevice> newNotificationDevices = new List<NotificationDevice>();
             foreach (var brokenHistory in _context.BrokenHistories.ToList())
@@ -222,10 +222,10 @@ namespace DACN3.Controllers
                 }
 
             }
-            int pageSize = 8;
+            /*int pageSize = 8;
             int pageNumber = Page == null || Page < 0 ? 1 : Page.Value;
-            PagedList<NotificationDevice> lst = new PagedList<NotificationDevice>(newNotificationDevices, pageNumber, pageSize);
-            return View(lst);
+            PagedList<NotificationDevice> lst = new PagedList<NotificationDevice>(newNotificationDevices, pageNumber, pageSize);*/
+            return View(newNotificationDevices);
         }
 
     }
