@@ -1,16 +1,15 @@
 ﻿@model IEnumerable<DACN3.Models.ViewModel.NotificationDevice>
 
 @{
-    ViewData["Title"] = "Danh sách báo cáo";
-    Layout = "~/Views/Shared/LayoutManagerList.cshtml";
+    ViewData["Title"] = "ListNotificationHistory";
 }
 
-<h1>Danh sách báo cáo</h1>
-<form action="/Notification/ListNotificationManager" method="get">
+<h1>ListNotificationHistory</h1>
+
+<form action="/Notification/ListNotificationHistory" method="get">
     <label for="status">Status:</label>
     <select id="status" name="Status">
         <option value="">-- All --</option>
-        <option value="Pending">Pending</option>
         <option value="Approved">Approved</option>
         <option value="Cancelled">Cancelled</option>
         <!-- Các trạng thái khác bạn muốn lọc -->
@@ -18,23 +17,22 @@
     <button type="submit">Filter</button>
 </form>
 <table class="table">
-
     <thead>
         <tr>
             <th>
-                Thời gian
+                @Html.DisplayNameFor(model => model.Timestamp)
             </th>
             <th>
-                Hình ảnh
+                @Html.DisplayNameFor(model => model.Image)
             </th>
             <th>
-                Số lượng
+                @Html.DisplayNameFor(model => model.amount)
             </th>
             <th>
-                Trạng thái
+                @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                Lý do
+                @Html.DisplayNameFor(model => model.Reason)
             </th>
             <th></th>
         </tr>
@@ -46,7 +44,7 @@
                 @Html.DisplayFor(modelItem => item.Timestamp)
             </td>
             <td>
-                <img src="@Url.Content(item.Image)" alt="Image" style="max-width: 100px; max-height: 100px;" />
+                @Html.DisplayFor(modelItem => item.Image)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.amount)
@@ -61,14 +59,3 @@
 }
     </tbody>
 </table>
-<style>
-    .description-container {
-        max-height: 50px; /* Chiều cao tối đa của mô tả khi thu gọn */
-        overflow: hidden;
-    }
-
-    .expanded {
-        max-height: none; /* Loại bỏ giới hạn chiều cao khi mở rộng */
-    }
-
-</style>

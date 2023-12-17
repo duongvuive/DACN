@@ -59,7 +59,7 @@ namespace DACN3.Controllers
             {
                 string id_sender = userId.ToString();
                 var account = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
-                var storedNameNotification = TempData["NameClass"] as string;
+                var storedNameNotification = TempData["NameClassNotification"] as string;
                 var ImageNotification = TempData["imageNotification"] as string;
                 string sender_name = account.UserName;
                 int classDetailID = int.Parse(TempData["classDetailID"].ToString());
@@ -183,7 +183,7 @@ namespace DACN3.Controllers
             return Ok();
         }
         [Authorize(Roles = "Manager")]
-        public IActionResult ListNotificationManager()
+        public IActionResult ListNotificationManager(FilterViewModel filter)
         {
             List<NotificationDevice> newNotificationDevices = new List<NotificationDevice>();
             var brokenHistoriesWithNotifications = _context.BrokenHistories
@@ -194,6 +194,18 @@ namespace DACN3.Controllers
             {
                 var notification = _context.Notifications.FirstOrDefault(x => x.IdBrokenHistory == brokenHistory.Id);
                 var confirmationNotification = _context.Confirmations.FirstOrDefault(x => x.IdNotification == notification.Id);
+                if ( filter.Status== "Pending" && confirmationNotification != null)
+                {
+                    continue;
+                }
+                else if (filter.Status == "Approved" && (confirmationNotification == null || (confirmationNotification != null && confirmationNotification.ConfirmationStatus != true)))
+                {
+                    continue; 
+                }
+                else if (filter.Status == "Cancelled" && (confirmationNotification == null || (confirmationNotification != null && confirmationNotification.ConfirmationStatus != false)))
+                {
+                    continue; 
+                }
                 if (confirmationNotification == null)
                 {
                     var newNotificationDevice = new NotificationDevice
@@ -229,9 +241,57 @@ namespace DACN3.Controllers
                 }
 
             }
-            /*int pageSize = 8;
-            int pageNumber = Page == null || Page < 0 ? 1 : Page.Value;
-            PagedList<NotificationDevice> lst = new PagedList<NotificationDevice>(newNotificationDevices, pageNumber, pageSize);*/
+            return View(newNotificationDevices);
+        }
+        public IActionResult ListNotificationHistory(FilterViewModel filter)
+        {
+            List<NotificationDevice> newNotificationDevices = new List<NotificationDevice>();
+            var brokenHistoriesWithNotifications = _context.BrokenHistories
+                                                        .Where(brokenHistory => _context.Notifications.Any(notification => notification.IdBrokenHistory == brokenHistory.Id))
+                                                        .ToList();
+
+            foreach (var brokenHistory in brokenHistoriesWithNotifications)
+            {
+                var notification = _context.Notifications.FirstOrDefault(x => x.IdBrokenHistory == brokenHistory.Id);
+                var confirmationNotification = _context.Confirmations.FirstOrDefault(x => x.IdNotification == notification.Id);
+                 if (filter.Status == "Approved" && (confirmationNotification == null || (confirmationNotification != null && confirmationNotification.ConfirmationStatus != true)))
+                {
+                    continue; 
+                }
+                else if (filter.Status == "Cancelled" && (confirmationNotification == null || (confirmationNotification != null && confirmationNotification.ConfirmationStatus != false)))
+                {
+                    continue; 
+                }
+                if (confirmationNotification != null)
+                {
+                    if (confirmationNotification.ConfirmationStatus == true)
+                    {
+                        var newNotificationDevice = new NotificationDevice
+                        {
+                            Timestamp = brokenHistory.Timestamp,
+                            Image = notification.Image,
+                            amount = notification.Amount,
+                            Status = "Được xét duyệt",
+                            Reason = notification.Description
+                        };
+                        newNotificationDevices.Add(newNotificationDevice);
+                    }
+                    else if (confirmationNotification.ConfirmationStatus == false)
+                    {
+                        var newNotificationDevice = new NotificationDevice
+                        {
+                            Timestamp = brokenHistory.Timestamp,
+                            Image = notification.Image,
+                            amount = notification.Amount,
+                            Status = "Hủy",
+                            Reason = notification.Description
+                        };
+                        newNotificationDevices.Add(newNotificationDevice);
+                    }
+                }
+                   
+
+            }
             return View(newNotificationDevices);
         }
 
