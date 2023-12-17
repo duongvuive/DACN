@@ -20,6 +20,4 @@ public partial class Device
     public virtual DeviceClassfication IdDeviceClassficationNavigation { get; set; } = null!;
 
     public virtual Supplier IdSupplierNavigation { get; set; } = null!;
-
-    public virtual ICollection<ImportExportWarehouse> ImportExportWarehouses { get; set; } = new List<ImportExportWarehouse>();
 }

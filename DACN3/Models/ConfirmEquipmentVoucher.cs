@@ -13,7 +13,7 @@ public partial class ConfirmEquipmentVoucher
 
     public bool? ConfirmationStatus { get; set; }
 
-    public string? Reason { get; set; } 
+    public string? Reason { get; set; }
 
     public virtual EquipmentVoucher IdEquipmentVouchersNavigation { get; set; } = null!;
 

@@ -10,4 +10,6 @@ public partial class Area
     public string Name { get; set; } = null!;
 
     public virtual ICollection<Floor> Floors { get; set; } = new List<Floor>();
+
+    public virtual ICollection<Warehouse> Warehouses { get; set; } = new List<Warehouse>();
 }

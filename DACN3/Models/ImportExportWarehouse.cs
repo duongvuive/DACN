@@ -7,9 +7,7 @@ public partial class ImportExportWarehouse
 {
     public int Id { get; set; }
 
-    public int IdDevice { get; set; }
-
-    public int IdWarehouse { get; set; }
+    public int IdDeviceWarehouse { get; set; }
 
     public DateTime Date { get; set; }
 
@@ -17,9 +15,9 @@ public partial class ImportExportWarehouse
 
     public string UserId { get; set; } = null!;
 
-    public virtual Device IdDeviceNavigation { get; set; } = null!;
+    public int Amount { get; set; }
 
-    public virtual Warehouse IdWarehouseNavigation { get; set; } = null!;
+    public virtual DeviceWarehouse IdDeviceWarehouseNavigation { get; set; } = null!;
 
     public virtual AspNetUser User { get; set; } = null!;
 }

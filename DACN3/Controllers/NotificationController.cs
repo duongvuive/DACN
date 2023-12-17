@@ -156,6 +156,7 @@ namespace DACN3.Controllers
                     .Select(result => result.ClassDetail.IdDevice)
                     .FirstOrDefault();
             var Warehouse=_context.DeviceWarehouses.FirstOrDefault(x => x.IdDevice == DeviceID);
+            var brokenHistory = _context.BrokenHistories.FirstOrDefault(x => x.Id == notification.IdBrokenHistory);
             if (_notificationSercvice.IsWareHouse(Warehouse.Quantity,notification.Amount) == false) { 
                 int numverWarehouse=Warehouse.Quantity;
                 int sub=notification.Amount- numverWarehouse;
@@ -163,12 +164,16 @@ namespace DACN3.Controllers
                 Warehouse.Quantity = Warehouse.Quantity- numverWarehouse;
                 confirm.Reason = description;
                 _context.SaveChanges();
+                int warehouseID=_notificationSercvice.IDWarehouse(brokenHistory.DeviceClassroomId);
+                _notificationSercvice.CreateHistoryWarehouseImport(warehouseID, DeviceID, userId, numverWarehouse);
             }
             else
             {
                 int sub=Warehouse.Quantity-notification.Amount;
                 Warehouse.Quantity = sub;
                 _context.SaveChanges();
+                int warehouseID = _notificationSercvice.IDWarehouse(brokenHistory.DeviceClassroomId);
+                _notificationSercvice.CreateHistoryWarehouseImport(warehouseID, DeviceID, userId, notification.Amount);
             }
             return Ok();
         }
@@ -194,15 +199,15 @@ namespace DACN3.Controllers
             {
                 var notification = _context.Notifications.FirstOrDefault(x => x.IdBrokenHistory == brokenHistory.Id);
                 var confirmationNotification = _context.Confirmations.FirstOrDefault(x => x.IdNotification == notification.Id);
-                if ( filter.Status== "Pending" && confirmationNotification != null)
+                if ( filter.Status== "Đang xét duyệt" && confirmationNotification != null)
                 {
                     continue;
                 }
-                else if (filter.Status == "Approved" && (confirmationNotification == null || (confirmationNotification != null && confirmationNotification.ConfirmationStatus != true)))
+                else if (filter.Status == "Duyệt" && (confirmationNotification == null || (confirmationNotification != null && confirmationNotification.ConfirmationStatus != true)))
                 {
                     continue; 
                 }
-                else if (filter.Status == "Cancelled" && (confirmationNotification == null || (confirmationNotification != null && confirmationNotification.ConfirmationStatus != false)))
+                else if (filter.Status == "Hủy" && (confirmationNotification == null || (confirmationNotification != null && confirmationNotification.ConfirmationStatus != false)))
                 {
                     continue; 
                 }
@@ -293,6 +298,62 @@ namespace DACN3.Controllers
 
             }
             return View(newNotificationDevices);
+        }
+        [Authorize(Roles = "Inventory Management")]
+        public IActionResult ListHistoryStore(FilterViewModel filter)
+        {
+            List<ViewImportExportWarehouse> newViewImportExportWarehouses = new List<ViewImportExportWarehouse>();
+            var exportWarHouses= _context.ImportExportWarehouses.ToList();
+
+            foreach (var ExportWarehouse in exportWarHouses)
+            {
+                var deviceWarehouse=_context.DeviceWarehouses.FirstOrDefault(x=>x.Id== ExportWarehouse.IdDeviceWarehouse);
+                var device= _context.Devices.FirstOrDefault(x => x.Id == deviceWarehouse.IdDevice);
+                var wareHouse = _context.Warehouses.FirstOrDefault(x => x.Id == deviceWarehouse.IdWarehouse);
+                var area = _context.Areas.FirstOrDefault(x => x.Id == wareHouse.IdArea);
+                if (filter.Status == "Xuất Kho" && (ExportWarehouse == null || (ExportWarehouse != null && ExportWarehouse.IsImport != true)))
+                {
+                    continue;
+                }
+                else if (filter.Status == "Nhập Kho" && (ExportWarehouse == null || (ExportWarehouse != null && ExportWarehouse.IsImport != false)))
+                {
+                    continue;
+                }
+                if (ExportWarehouse != null)
+                {
+                    if (ExportWarehouse.IsImport == false)
+                    {
+                        var newViewImportExportWarehouse = new ViewImportExportWarehouse
+                        {
+                            NameDevice = device.Name,
+                            NameWarehouse=wareHouse.Name,
+                            Area= area.Name,
+                            Date= DateTime.Now,
+                            Status="Xuất kho",
+                            Amount= ExportWarehouse.Amount
+
+                        };
+                        newViewImportExportWarehouses.Add(newViewImportExportWarehouse);
+                    }
+                    else if (ExportWarehouse.IsImport == true)
+                    {
+                        var newViewImportExportWarehouse = new ViewImportExportWarehouse
+                        {
+                            NameDevice = device.Name,
+                            NameWarehouse = wareHouse.Name,
+                            Area = area.Name,
+                            Date = DateTime.Now,
+                            Status = "Nhập kho",
+                            Amount = ExportWarehouse.Amount
+
+                        };
+                        newViewImportExportWarehouses.Add(newViewImportExportWarehouse);
+                    }
+                }
+
+
+            }
+            return View(newViewImportExportWarehouses);
         }
 
     }

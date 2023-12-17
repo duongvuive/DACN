@@ -142,7 +142,6 @@ public partial class Qldevice1Context : DbContext
         {
             entity.HasKey(ur => new { ur.UserId, ur.RoleId });
         });
-
         modelBuilder.Entity<AspNetUserClaim>(entity =>
         {
             entity.Property(e => e.UserId).HasMaxLength(450);
@@ -311,6 +310,7 @@ public partial class Qldevice1Context : DbContext
 
             entity.HasOne(d => d.IdUserConfirmsNavigation).WithMany(p => p.Confirmations)
                 .HasForeignKey(d => d.IdUserConfirms)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Confirmation _AspNetUsers_Id");
         });
 
@@ -458,22 +458,16 @@ public partial class Qldevice1Context : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Date).HasColumnType("datetime");
-            entity.Property(e => e.IdDevice).HasColumnName("Id_Device");
-            entity.Property(e => e.IdWarehouse).HasColumnName("Id_Warehouse");
+            entity.Property(e => e.IdDeviceWarehouse).HasColumnName("Id_Device_Warehouse");
             entity.Property(e => e.IsImport).HasColumnName("Is_Import");
             entity.Property(e => e.UserId)
                 .HasMaxLength(450)
                 .HasColumnName("User_ID");
 
-            entity.HasOne(d => d.IdDeviceNavigation).WithMany(p => p.ImportExportWarehouses)
-                .HasForeignKey(d => d.IdDevice)
+            entity.HasOne(d => d.IdDeviceWarehouseNavigation).WithMany(p => p.ImportExportWarehouses)
+                .HasForeignKey(d => d.IdDeviceWarehouse)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Import_Export_Warehouse_Device_ID");
-
-            entity.HasOne(d => d.IdWarehouseNavigation).WithMany(p => p.ImportExportWarehouses)
-                .HasForeignKey(d => d.IdWarehouse)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Import_Export_Warehouse_Warehouse_ID");
+                .HasConstraintName("FK_Import_Export_Warehouse_Device_Warehouse_ID");
 
             entity.HasOne(d => d.User).WithMany(p => p.ImportExportWarehouses)
                 .HasForeignKey(d => d.UserId)
@@ -561,15 +555,21 @@ public partial class Qldevice1Context : DbContext
 
         modelBuilder.Entity<Warehouse>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK_Warehouse_ID");
+
             entity.ToTable("Warehouse");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-
             entity.Property(e => e.Address).HasMaxLength(150);
-
+            entity.Property(e => e.IdArea).HasColumnName("ID_AREA");
             entity.Property(e => e.Name)
                 .HasMaxLength(70)
                 .HasColumnName("NAME");
+
+            entity.HasOne(d => d.IdAreaNavigation).WithMany(p => p.Warehouses)
+                .HasForeignKey(d => d.IdArea)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Warehouse_AREA_ID");
         });
 
         OnModelCreatingPartial(modelBuilder);

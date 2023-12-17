@@ -1,0 +1,73 @@
+﻿@model IEnumerable<DACN3.Models.ViewModel.ViewImportExportWarehouse>
+
+@{
+    ViewData["Title"] = "ListHistoryStore";
+}
+
+<h1>ListHistoryStore</h1>
+
+<form action="/Notification/ListNotificationManager" method="get">
+    <label for="status">Status:</label>
+    <select id="status" name="Status">
+        <option value="">-- Tất cả --</option>
+        <option value="Nhập Kho">Nhập Kho</option>
+        <option value="Xuất Kho">Xuất Kho</option>
+        <!-- Các trạng thái khác bạn muốn lọc -->
+    </select>
+    <button type="submit">Filter</button>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NameDevice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameWarehouse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WarehouseMagement)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameDevice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameWarehouse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WarehouseMagement)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

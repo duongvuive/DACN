@@ -16,4 +16,6 @@ public partial class DeviceWarehouse
     public virtual Device IdDeviceNavigation { get; set; } = null!;
 
     public virtual Warehouse IdWarehouseNavigation { get; set; } = null!;
+
+    public virtual ICollection<ImportExportWarehouse> ImportExportWarehouses { get; set; } = new List<ImportExportWarehouse>();
 }

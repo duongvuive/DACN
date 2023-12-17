@@ -17,7 +17,6 @@ public partial class AspNetUser
         EquipmentVouchers = new HashSet<EquipmentVoucher>();
         ImportExportWarehouses = new HashSet<ImportExportWarehouse>();
         Repairs = new HashSet<Repair>();
-        Roles = new HashSet<AspNetRole>();
         UserRoles = new List<AspNetUserRole>();
     }
 
@@ -48,7 +47,5 @@ public partial class AspNetUser
     public virtual ICollection<EquipmentVoucher> EquipmentVouchers { get; set; }
     public virtual ICollection<ImportExportWarehouse> ImportExportWarehouses { get; set; }
     public virtual ICollection<Repair> Repairs { get; set; }
-
-    public virtual ICollection<AspNetRole> Roles { get; set; }
     public virtual ICollection<AspNetUserRole> UserRoles { get; set; } = new List<AspNetUserRole>();
 }
