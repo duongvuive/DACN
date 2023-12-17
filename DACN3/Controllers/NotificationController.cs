@@ -159,7 +159,7 @@ namespace DACN3.Controllers
             if (_notificationSercvice.IsWareHouse(Warehouse.Quantity,notification.Amount) == false) { 
                 int numverWarehouse=Warehouse.Quantity;
                 int sub=notification.Amount- numverWarehouse;
-                string description=$"số lượng thiết bị được duyệt {numverWarehouse} và đây là số lượng còn thiếu {sub} )";
+                string description=$"số lượng thiết bị được duyệt {numverWarehouse} và đây là số lượng còn thiếu {sub} yêu cầu gửi một thông báo mới để chờ xét duyệt.";
                 Warehouse.Quantity = Warehouse.Quantity- numverWarehouse;
                 confirm.Reason = description;
                 _context.SaveChanges();
