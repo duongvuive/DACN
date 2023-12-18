@@ -11,9 +11,9 @@ public partial class Warehouse
 
     public string Address { get; set; } = null!;
 
-    public int IdArea { get; set; }
+    public int IdBuilding { get; set; }
 
     public virtual ICollection<DeviceWarehouse> DeviceWarehouses { get; set; } = new List<DeviceWarehouse>();
 
-    public virtual Area IdAreaNavigation { get; set; } = null!;
+    public virtual Building IdBuildingNavigation { get; set; } = null!;
 }

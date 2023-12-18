@@ -9,7 +9,9 @@ public partial class Area
 
     public string Name { get; set; } = null!;
 
-    public virtual ICollection<Floor> Floors { get; set; } = new List<Floor>();
+    public int IdBuilding { get; set; }
 
-    public virtual ICollection<Warehouse> Warehouses { get; set; } = new List<Warehouse>();
+    public virtual Building? Building { get; set; }
+
+    public virtual ICollection<Floor> Floors { get; set; } = new List<Floor>();
 }

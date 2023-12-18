@@ -82,8 +82,8 @@ namespace DACN3.Service
                                join classroom in _context.Classrooms on classDetail.IdClassroom equals classroom.Id
                                join floor in _context.Floors on classroom.IdFloor equals floor.Id
                                join area in _context.Areas on floor.IdArea equals area.Id
-                               join warehouse in _context.Warehouses on area.Id equals warehouse.IdArea
-                               select warehouse.Id).FirstOrDefault();
+                               join warehouse in _context.Warehouses on area.IdBuilding equals warehouse.IdBuilding
+                               select warehouse.IdBuilding).FirstOrDefault();
             return idWarehouse;
         }
 

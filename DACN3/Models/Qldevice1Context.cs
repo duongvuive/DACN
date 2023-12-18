@@ -35,6 +35,8 @@ public partial class Qldevice1Context : DbContext
 
     public virtual DbSet<BrokenHistory> BrokenHistories { get; set; }
 
+    public virtual DbSet<Building> Buildings { get; set; }
+
     public virtual DbSet<ClassDetail> ClassDetails { get; set; }
 
     public virtual DbSet<Classroom> Classrooms { get; set; }
@@ -107,6 +109,7 @@ public partial class Qldevice1Context : DbContext
             entity.ToTable("AREA");
 
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.IdBuilding).HasColumnName("ID_Building");
             entity.Property(e => e.Name)
                 .HasMaxLength(3)
                 .IsUnicode(false);
@@ -142,6 +145,7 @@ public partial class Qldevice1Context : DbContext
         {
             entity.HasKey(ur => new { ur.UserId, ur.RoleId });
         });
+
         modelBuilder.Entity<AspNetUserClaim>(entity =>
         {
             entity.Property(e => e.UserId).HasMaxLength(450);
@@ -225,6 +229,22 @@ public partial class Qldevice1Context : DbContext
                 .HasForeignKey(d => d.SenderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Broken_History_AspNetUsers_Id");
+        });
+
+        modelBuilder.Entity<Building>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Building_ID");
+
+            entity.ToTable("Building");
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(10);
+
+            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Building)
+                .HasForeignKey<Building>(d => d.Id)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<ClassDetail>(entity =>
@@ -561,15 +581,15 @@ public partial class Qldevice1Context : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Address).HasMaxLength(150);
-            entity.Property(e => e.IdArea).HasColumnName("ID_AREA");
+            entity.Property(e => e.IdBuilding).HasColumnName("ID_Building");
             entity.Property(e => e.Name)
                 .HasMaxLength(70)
                 .HasColumnName("NAME");
 
-            entity.HasOne(d => d.IdAreaNavigation).WithMany(p => p.Warehouses)
-                .HasForeignKey(d => d.IdArea)
+            entity.HasOne(d => d.IdBuildingNavigation).WithMany(p => p.Warehouses)
+                .HasForeignKey(d => d.IdBuilding)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Warehouse_AREA_ID");
+                .HasConstraintName("FK_Warehouse_Building_ID");
         });
 
         OnModelCreatingPartial(modelBuilder);

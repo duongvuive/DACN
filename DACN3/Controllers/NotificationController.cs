@@ -310,7 +310,7 @@ namespace DACN3.Controllers
                 var deviceWarehouse=_context.DeviceWarehouses.FirstOrDefault(x=>x.Id== ExportWarehouse.IdDeviceWarehouse);
                 var device= _context.Devices.FirstOrDefault(x => x.Id == deviceWarehouse.IdDevice);
                 var wareHouse = _context.Warehouses.FirstOrDefault(x => x.Id == deviceWarehouse.IdWarehouse);
-                var area = _context.Areas.FirstOrDefault(x => x.Id == wareHouse.IdArea);
+                var building = _context.Buildings.FirstOrDefault(x => x.Id == wareHouse.IdBuilding);
                 if (filter.Status == "Xuất Kho" && (ExportWarehouse == null || (ExportWarehouse != null && ExportWarehouse.IsImport != true)))
                 {
                     continue;
@@ -327,7 +327,7 @@ namespace DACN3.Controllers
                         {
                             NameDevice = device.Name,
                             NameWarehouse=wareHouse.Name,
-                            Area= area.Name,
+                            Area= building.Name,
                             Date= DateTime.Now,
                             Status="Xuất kho",
                             Amount= ExportWarehouse.Amount
@@ -341,7 +341,7 @@ namespace DACN3.Controllers
                         {
                             NameDevice = device.Name,
                             NameWarehouse = wareHouse.Name,
-                            Area = area.Name,
+                            Area = building.Name,
                             Date = DateTime.Now,
                             Status = "Nhập kho",
                             Amount = ExportWarehouse.Amount
