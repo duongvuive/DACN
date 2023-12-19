@@ -312,11 +312,11 @@ namespace DACN3.Controllers
                 var wareHouse = _context.Warehouses.FirstOrDefault(x => x.Id == deviceWarehouse.IdWarehouse);
                 var building = _context.Buildings.FirstOrDefault(x => x.Id == wareHouse.IdBuilding);
                 var user = _context.AspNetUsers.FirstOrDefault(x => x.Id == ExportWarehouse.UserId);
-                if (filter.Status == "Xuất Kho" && (ExportWarehouse == null || (ExportWarehouse != null && ExportWarehouse.IsImport != true)))
+                if (filter.Status == "Nhập Kho" && (ExportWarehouse == null || (ExportWarehouse != null && ExportWarehouse.IsImport != true)))
                 {
                     continue;
                 }
-                else if (filter.Status == "Nhập Kho" && (ExportWarehouse == null || (ExportWarehouse != null && ExportWarehouse.IsImport != false)))
+                else if (filter.Status == "Xuất Kho" && (ExportWarehouse == null || (ExportWarehouse != null && ExportWarehouse.IsImport != false)))
                 {
                     continue;
                 }
