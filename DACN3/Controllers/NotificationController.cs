@@ -311,6 +311,7 @@ namespace DACN3.Controllers
                 var device= _context.Devices.FirstOrDefault(x => x.Id == deviceWarehouse.IdDevice);
                 var wareHouse = _context.Warehouses.FirstOrDefault(x => x.Id == deviceWarehouse.IdWarehouse);
                 var building = _context.Buildings.FirstOrDefault(x => x.Id == wareHouse.IdBuilding);
+                var user = _context.AspNetUsers.FirstOrDefault(x => x.Id == ExportWarehouse.UserId);
                 if (filter.Status == "Xuất Kho" && (ExportWarehouse == null || (ExportWarehouse != null && ExportWarehouse.IsImport != true)))
                 {
                     continue;
@@ -330,6 +331,7 @@ namespace DACN3.Controllers
                             Area= building.Name,
                             Date= DateTime.Now,
                             Status="Xuất kho",
+                            WarehouseMagement=user.UserName,
                             Amount= ExportWarehouse.Amount
 
                         };
