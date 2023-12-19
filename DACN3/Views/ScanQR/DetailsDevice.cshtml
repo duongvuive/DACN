@@ -1,28 +1,31 @@
 ﻿@model DACN3.Models.ViewModel.DetailOfDevice
 @{
     ViewData["Title"] = "Chi tiết thiết bị";
+    Layout = null;
 }
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi tiết thiết bị</title>
 </head>
 <body>
-    <h1>Thông Tin Thiết Bị</h1>
+    <div class="container">
+        <h1>Thông Tin Thiết Bị</h1>
 
-    <p><strong>Tên Thiết Bị:</strong> @Model.NameDevice</p>
-    <p><strong>Loại thiết bị:</strong> @Model.NameDeviceClassfication</p>
-    <p><strong>Nhà Sản Xuất:</strong> @Model.NameSupplier</p>
-    <p><strong>Lớp Học:</strong> @Model.NameClass</p>
-    <p><strong>Số lượng thiết bị :</strong> @Model.Quantify</p>
-    <button id="buttonToReportPage">Tạo Báo cáo </button>
+        <p><strong>Tên Thiết Bị:</strong> @Model.NameDevice</p>
+        <p><strong>Loại thiết bị:</strong> @Model.NameDeviceClassfication</p>
+        <p><strong>Nhà Sản Xuất:</strong> @Model.NameSupplier</p>
+        <p><strong>Lớp Học:</strong> @Model.NameClass</p>
+        <p><strong>Số lượng thiết bị :</strong> @Model.Quantify</p>
+        <button id="buttonToReportPage">Tạo Báo cáo </button>
+    </div>
 
     <script>
         document.getElementById('buttonToReportPage').addEventListener('click', function (event) {
-            event.preventDefault(); // Ngăn chặn hành động mặc định của nút button
+            event.preventDefault();
 
-            // Tạo URL chứa DeviceID (sử dụng template string)
-           
             const url = `/Camera/Capture`;
 
             window.location.href = url;
@@ -30,4 +33,48 @@
     </script>
 </body>
 </html>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4; /* Thêm một màu nền */
+    }
 
+    .container {
+        text-align: center;
+        padding: 40px; /* Tăng giá trị padding để làm cho khung lớn hơn */
+        border: 2px solid #3498db; /* Thay đổi màu viền */
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Tăng độ mờ của box-shadow */
+        background-color: #fff; /* Thêm một màu nền trong khung */
+    }
+
+    h1 {
+        font-size: 28px; /* Tăng kích thước font cho tiêu đề */
+        margin-bottom: 20px;
+    }
+
+    p {
+        margin: 15px 0; /* Tăng giá trị margin cho đoạn văn bản */
+    }
+
+    button {
+        padding: 12px 24px; /* Tăng giá trị padding của nút */
+        font-size: 18px; /* Tăng kích thước font của nút */
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease; /* Thêm hiệu ứng chuyển động màu sắc */
+    }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+</style>

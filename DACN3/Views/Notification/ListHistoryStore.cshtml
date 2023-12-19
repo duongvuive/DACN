@@ -1,44 +1,45 @@
 ﻿@model IEnumerable<DACN3.Models.ViewModel.ViewImportExportWarehouse>
 
 @{
-    ViewData["Title"] = "ListHistoryStore";
+    ViewData["Title"] = "Lịch sử nhập xuất";
+    Layout = "~/Views/Shared/LayoutList.cshtml";
 }
 
-<h1>ListHistoryStore</h1>
+<h1>Lịch sử nhập xuất kho</h1>
 
-<form action="/Notification/ListNotificationManager" method="get">
-    <label for="status">Status:</label>
+<form action="/Notification/ListHistoryStore" method="get">
+    <label for="status">Trạng thái:</label>
     <select id="status" name="Status">
         <option value="">-- Tất cả --</option>
         <option value="Nhập Kho">Nhập Kho</option>
         <option value="Xuất Kho">Xuất Kho</option>
         <!-- Các trạng thái khác bạn muốn lọc -->
     </select>
-    <button type="submit">Filter</button>
+    <button type="submit">Lọc</button>
 </form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NameDevice)
+                Tên thiết bị
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NameWarehouse)
+                Kho
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Area)
+                Trụ sở
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                Thời gian
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                Trạng thái
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.WarehouseMagement)
+               Quản lý kho
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+                Số lượng
             </th>
             <th></th>
         </tr>
@@ -71,3 +72,39 @@
 }
     </tbody>
 </table>
+<style>
+    /* Apply a bit of styling to the form container */
+    form {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px; /* Add some spacing at the bottom */
+    }
+
+    /* Style the label */
+    label {
+        margin-right: 10px;
+    }
+
+    /* Style the select box */
+    select {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    /* Style the button */
+    button {
+        padding: 8px 15px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        /* Change button color on hover */
+        button:hover {
+            background-color: #45a049;
+        }
+
+</style>

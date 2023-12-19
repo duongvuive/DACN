@@ -1,38 +1,39 @@
 ﻿@model IEnumerable<DACN3.Models.ViewModel.NotificationDevice>
 
 @{
-    ViewData["Title"] = "ListNotificationHistory";
+    ViewData["Title"] = "Lịch sử báo cáo";
+    Layout = "~/Views/Shared/LayoutList.cshtml";
 }
 
-<h1>ListNotificationHistory</h1>
+<h1>Lịch sử báo cáo</h1>
 
 <form action="/Notification/ListNotificationHistory" method="get">
-    <label for="status">Status:</label>
+    <label for="status">Trạng thái:</label>
     <select id="status" name="Status">
-        <option value="">-- All --</option>
-        <option value="Approved">Approved</option>
-        <option value="Cancelled">Cancelled</option>
+        <option value="">-- Tất cả --</option>
+        <option value="Approved">Đã duyệt</option>
+        <option value="Cancelled">Đã huỷ</option>
         <!-- Các trạng thái khác bạn muốn lọc -->
     </select>
-    <button type="submit">Filter</button>
+    <button type="submit">Lọc</button>
 </form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Timestamp)
+                Thời gian
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Image)
+                Hình ảnh
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.amount)
+                Số lượng
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+               Trạng thái
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Reason)
+                Lí do
             </th>
             <th></th>
         </tr>
@@ -44,7 +45,7 @@
                 @Html.DisplayFor(modelItem => item.Timestamp)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Image)
+                <img src="@Url.Content(item.Image)" alt="Image" style="max-width: 100px; max-height: 100px;" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.amount)
@@ -59,3 +60,39 @@
 }
     </tbody>
 </table>
+<style>
+    /* Apply a bit of styling to the form container */
+    form {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px; /* Add some spacing at the bottom */
+    }
+
+    /* Style the label */
+    label {
+        margin-right: 10px;
+    }
+
+    /* Style the select box */
+    select {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    /* Style the button */
+    button {
+        padding: 8px 15px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        /* Change button color on hover */
+        button:hover {
+            background-color: #45a049;
+        }
+
+</style>

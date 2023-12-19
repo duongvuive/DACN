@@ -2,75 +2,86 @@
 
 @{
     ViewData["Title"] = "Báo cáo";
-
+    Layout = null;
 }
 
-<h1>Báo cáo</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Báo cáo</h1>
 
-<div>
-    <h4>Thông tin thiết bị</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd class="col-sm-10">
+        <div>
+            <h4>Thông tin thiết bị</h4>
+            <hr />
+            <div class="row">
+                <div class="col-sm-2">
+                    <dt>
+                        Hình ảnh
+                    </dt>
+                    <dd>
+                        <img src="@Url.Content(Model.Image)" alt="Image" style="max-width: 400px; max-height: 400px;" />
+                    </dd>
+                </div>
 
-            <img src="@Url.Content(Model.Image)" alt="Image" style="max-width: 400px; max-height: 400px;" />
+                <div class="col-sm-10">
+                    <dt>
+                        Tên thiết bị :  @Html.DisplayFor(model => model.NameDevice)
+                    </dt>
+                    
 
-        </dd>
+                    <dt>
+                        Phòng : @Html.DisplayFor(model => model.Classroom)
+                    </dt>
+                    
 
-        <dt class="col-sm-2">
-            Tên thiết bị
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NameDevice)
-        </dd>
-        <dt class="col-sm-2">
-            Phòng
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Classroom)
-        </dd>
-        @* <dt class="col-sm-2">
-        Số lượng
-        </dt> *@
-        <div class="form-group-sm">
-            <label asp-for="Amount" class="control-label">Số lượng</label>
-            <input id="amountInput" asp-for="Amount" class="form-control-sm" />
-            <span asp-validation-for="Amount" class="text-danger"></span>
+                    <div class="form-group-sm">
+                        <label asp-for="Amount" class="control-label">Số lượng</label>
+                        <input id="amountInput" asp-for="Amount" class="form-control-sm" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </dl>
-</div>
-<div>
-    <button onclick="ConfirmFunction()">Xác nhận</button>
-</div>
 
-<script>
-    function ConfirmFunction() {
-        var amountValue = document.getElementById('amountInput').value;
-        console.log('amountValue:', amountValue); // Thêm dòng này để kiểm tra giá trị amountValue
-        var parsedAmount = parseInt(amountValue);
+        <div>
+            <button onclick="ConfirmFunction()">Xác nhận</button>
+        </div>
+    </div>
 
-        fetch('/Notification/Confirm', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ amount: parsedAmount })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    window.location.href = '/Manager/ManagerStaff';
-                } else {
-                    alert(data.message);
-                }
+    <script>
+        function ConfirmFunction() {
+            var amountValue = document.getElementById('amountInput').value;
+            console.log('amountValue:', amountValue);
+            var parsedAmount = parseInt(amountValue);
+
+            fetch('/Notification/Confirm', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ amount: parsedAmount })
             })
-    }
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        window.location.href = '/Manager/ManagerStaff';
+                    } else {
+                        alert(data.message);
+                    }
+                })
+        }
+    </script>
+</body>
+</html>
 
-</script>
 @* <script>
     function EditFunction() {
         // Tạo một yêu cầu POST bằng AJAX
@@ -82,3 +93,100 @@
         })
     }
 </script> *@
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    div.container {
+        text-align: left;
+        max-width: 600px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h4 {
+        color: #333;
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    hr {
+        border-color: #ddd;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -15px;
+    }
+
+    .col-sm-2,
+    .col-sm-10 {
+        padding: 0 15px;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 10px auto;
+        /* border-radius: 8px; Remove border-radius */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group-sm {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input.form-control-sm {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        /* border-radius: 4px; Remove border-radius */
+    }
+
+    .text-danger {
+        color: #dc3545;
+        display: block;
+        margin-top: 5px;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        /* border-radius: 4px; Remove border-radius */
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        float: right;
+    }
+
+        button:hover {
+            background-color: #45a049;
+        }
+</style>

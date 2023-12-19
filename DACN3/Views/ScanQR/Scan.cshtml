@@ -16,7 +16,7 @@
     <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
         <div style="text-align: center;">
 
-            <div id="reader" style="width: 500px;"></div>
+            <div id="reader" style="width: 600px;"></div>
             <p style="color: blue;" id="result"></p>
         </div>
     </div>
@@ -25,8 +25,6 @@
         const html5Qrcode = new Html5Qrcode('reader');
         const qrCodeSuccessCallback = (decodedText, decodedResult) => {
             if (decodedText) {
-
-
                 // Kiểm tra xem decodedText có đúng định dạng không
                 const regexPattern = /^\d+-\d+$/; // Chuỗi phải chỉ chứa số và có một ký tự '-' giữa chúng
                 const isFormatCorrect = regexPattern.test(decodedText);
@@ -55,7 +53,6 @@
                                 const classroomID = data.classroomID;
                                 const deviceID = data.deviceID;
                                 window.location.href = '/ScanQR/DetailsDevice?classroomID=' + classroomID + '&deviceID=' + deviceID;
-                               
                             } else {
                                 alert(data.message); // Hiển thị thông báo
                                 html5Qrcode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
@@ -66,7 +63,7 @@
             }
         }
 
-        const config = { fps: 20, qrbox: { width: 250, height: 250 } }
+        const config = { fps: 20, qrbox: { width: 400, height: 400 } } // Chỉnh giá trị width tại đây
         html5Qrcode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
     </script>
 </body>

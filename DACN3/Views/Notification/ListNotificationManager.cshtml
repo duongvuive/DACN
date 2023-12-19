@@ -7,7 +7,7 @@
 
 <h1>Danh sách báo cáo</h1>
 <form action="/Notification/ListNotificationManager" method="get">
-    <label for="status">Status:</label>
+    <label for="status">Trạng thái:</label>
     <select id="status" name="Status">
         <option value="">-- Tất cả --</option>
         <option value="Đang xét duyệt">Đang xét duyệt</option>
@@ -70,5 +70,37 @@
     .expanded {
         max-height: none; /* Loại bỏ giới hạn chiều cao khi mở rộng */
     }
+    /* Apply a bit of styling to the form container */
+    form {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px; /* Add some spacing at the bottom */
+    }
 
+    /* Style the label */
+    label {
+        margin-right: 10px;
+    }
+
+    /* Style the select box */
+    select {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    /* Style the button */
+    button {
+        padding: 8px 15px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        /* Change button color on hover */
+        button:hover {
+            background-color: #45a049;
+        }
 </style>
