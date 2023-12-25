@@ -1,13 +1,17 @@
 ﻿@model IEnumerable<DACN3.Models.ViewModel.NotificationDevice>
 
 @{
-    ViewData["Title"] = "Lịch sử báo cáo";
-    Layout = "~/Views/Shared/LayoutList.cshtml";
+    ViewData["Title"] = "Lịch sử xét duyệt";
+    Layout = "~/Views/Shared/LayoutInventory.cshtml";
 }
 
-<h1>Lịch sử báo cáo</h1>
-
 <form action="/Notification/ListNotificationHistory" method="get">
+<div class="detail">
+    <div class="report">
+        <div class="cardHeader">
+            <h2>DANH SÁCH LỊCH SỬ XÉT DUYỆT</h2>
+        </div>
+        <div class="filter">
     <label for="status">Trạng thái:</label>
     <select id="status" name="Status">
         <option value="">-- Tất cả --</option>
@@ -15,9 +19,9 @@
         <option value="Cancelled">Đã huỷ</option>
         <!-- Các trạng thái khác bạn muốn lọc -->
     </select>
-    <button type="submit">Lọc</button>
-</form>
-<table class="table">
+    <button class="filter-button" style="background-color: #28a745;" type="submit">Lọc trạng thái</button>
+        </div>
+<table>
     <thead>
         <tr>
             <th>
@@ -60,39 +64,14 @@
 }
     </tbody>
 </table>
+</div>
+</div>
+</form>
+<script src="/js/script.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 <style>
-    /* Apply a bit of styling to the form container */
-    form {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px; /* Add some spacing at the bottom */
+    tr td {
+        text-align: center;
     }
-
-    /* Style the label */
-    label {
-        margin-right: 10px;
-    }
-
-    /* Style the select box */
-    select {
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    /* Style the button */
-    button {
-        padding: 8px 15px;
-        background-color: #4CAF50;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-        /* Change button color on hover */
-        button:hover {
-            background-color: #45a049;
-        }
-
 </style>

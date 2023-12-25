@@ -14,6 +14,10 @@ namespace DACN3.Controllers
         {
             _context = context;
         }
+        public IActionResult TrangChu()
+        {
+            return View();
+        }
         public IActionResult ManagerStaff(string username, string password)
         {
             return View();

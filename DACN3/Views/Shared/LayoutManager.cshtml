@@ -1,130 +1,73 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <link rel="stylesheet" href="~/lib/layoutadmin/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="~/lib/layoutadmin/assets/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/DACN3.styles.css" asp-append-version="true" />
-    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/report-admin.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" data-purpose="Layout StyleSheet" title="Web Awesome" href="/css/app-wa-9846671ed7c9dd69b10c93f6b04b31fe.css?vsn=d">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-thin.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-solid.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-regular.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-light.css">
     <title>Trang chủ nhân viên thiết bị</title>
-    <script src="https://kit.fontawesome.com/e4c15aef63.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="~/lib/layoutadmin/assets/css/style.css">
 </head>
 <body>
-    <div class="container-scroller">
-        <!-- partial:~/lib/layoutadmin/partials/_navbar.html -->
-        <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo" asp-area="" asp-controller="Manager" asp-action="ManagerStaff"><img src="~/lib/layoutadmin/assets/images/logo1.svg" alt="logo" /></a>
-                <a class="navbar-brand brand-logo-mini" asp-area="" asp-controller="Manager" asp-action="ManagerStaff"><img src="~/lib/layoutadmin/assets/images/logo1.svg" alt="logo" /></a>
-            </div>
-            <div class="navbar-menu-wrapper d-flex align-items-stretch">
-                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-                    <span class="mdi mdi-menu"></span>
-                </button>
-                <ul class="navbar-nav navbar-nav-right">
-                  @*   <li class="nav-item d-none d-lg-block full-screen-link">
-                        <a class="nav-link" asp-area="" asp-controller="Notification" asp-action="NotificationInventory">
-                            <i class="mdi mdi-bell-outline"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item d-none d-lg-block full-screen-link">
-                        <a class="nav-link" asp-area="" asp-controller="ScanQR" asp-action="Scan">
-                            <i class="mdi mdi-fullscreen"></i>
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a style="margin-top: 10px; margin-bottom: -25px;" asp-area="" asp-controller="Manager" asp-action="ManagerStaff">
+                        <span class="icon"><img src="~/lib/layoutadmin/assets/images/logo1.svg" style="width: 65%; margin-top: 10px;" alt="" srcset=""></span>
+                        <span class="title" style="font-size: 35px; font-weight: bold; margin-right: 80px;">HUTECH</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="Manager" asp-action="TrangChu">
+                        <span class="icon"><i class="fa-regular fa-house"></i></span>
+                        <span class="title">Trang chủ</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="ScanQR" asp-action="Scan">
+                        <span class="icon"><i class="fa-regular fa-clipboard"></i></span>
+                        <span class="title">Quét QR thiết bị</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="Notification" asp-action="ListNotificationManager">
+                        <span class="icon"><i class="fa-sharp fa-light fa-rectangle-history-circle-plus"></i></span>
+                        <span class="title">Lịch sử báo cáo đã gửi</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" method="post">
+                        <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+                        <span class="title">Đăng xuất</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- main -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+                <div class="user">
+                    <span class="user-name" asp-area="Identity" asp-page="" title="Manage">Xin chào @User.Identity?.Name!</span>
+                </div>
 
-                        </a>
-                    </li> *@
-                   @*  <i class="fas fa-plus" asp-area="" asp-controller="Manager" asp-action="CreateClassDetail"></i> *@
-                </ul>
-                <partial name="_LoginPartial" />
-                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-                    <span class="mdi mdi-menu"></span>
-                </button>
             </div>
-        </nav>
-        <!-- partial -->
-        <div class="container-fluid page-body-wrapper">
-            <!-- partial:~/lib/layoutadmin/partials/_sidebar.html -->
-            <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                <ul class="nav">
-                  @*   <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Notification" asp-action="NotificationInventory">
-                            <span class="menu-title">Trang chủ</span>
-                            <i class="mdi mdi-home menu-icon"></i>
-                        </a>
-                    </li> *@
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="ScanQR" asp-action="Scan">
-                            <span class="menu-title">Quét QR thiết bị</span>
-                            <i class="mdi mdi-home menu-icon"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Notification" asp-action="ListNotificationManager">
-                            <span class="menu-title">Trạng thái báo cáo</span>
-                            <i class="mdi mdi-home menu-icon"></i>
-                        </a>
-                    </li>
-                    @*<li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                            <span class="menu-title">None</span>
-                            <i class="mdi mdi-home menu-icon"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                            <span class="menu-title">None</span>
-                            <i class="mdi mdi-home menu-icon"></i>
-                        </a>
-                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                            <span class="menu-title">none</span>
-                            <i class="mdi mdi-home menu-icon"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                            <span class="menu-title">none</span>
-                            <i class="mdi mdi-home menu-icon"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                            <span class="menu-title">none</span>
-                            <i class="mdi mdi-home menu-icon"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                            <span class="menu-title">none</span>
-                            <i class="mdi mdi-home menu-icon"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">
-                            <span class="menu-title">Tables</span>
-                            <i class="mdi mdi-table-large menu-icon"></i>
-                        </a>
-                    </li> *@
-                </ul>
-            </nav>
-            <!-- partial -->
-            <div class="main-panel">
-                <div class="content-wrapper" font-family: myFirstFont;>
+
+            <div class="detail">
+                <div class="report">
                     @RenderBody()
                 </div>
-                <!-- content-wrapper ends -->
-                <!-- partial:~/lib/layoutadmin/partials/_footer.html -->
-                <footer class="footer">
-                    <div class="container-fluid d-flex justify-content-between">
-                        <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © bootstrapdash.com 2021</span>
-                        <span class="float-none float-sm-end mt-1 mt-sm-0 text-end"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin template</a> from Bootstrapdash.com</span>
-                    </div>
-                </footer>
-                <!-- partial -->
             </div>
             <!-- main-panel ends -->
         </div>
@@ -147,7 +90,6 @@
     <!-- End custom js for this page -->
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - DACN3 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

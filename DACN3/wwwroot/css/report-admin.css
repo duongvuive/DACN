@@ -1,0 +1,329 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.main
+{
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
+    min-height: 100vh;
+    background: var(--white);
+    transition: 0.5s;
+}
+
+.main.active
+{
+    width: calc(100% - 300px);
+    left: 80px;
+}
+
+.topbar
+{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.toggle
+{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5em;
+    cursor: pointer;
+}
+
+.search
+{
+    position: relative;
+    width: 400px;
+    margin-top: 10px;
+}
+
+.search label
+{
+    position: relative;
+    width: 100%;
+}
+
+.search label input
+{
+    width: 100%;
+    height: 40px;
+    border-radius: 40px;
+    padding: 5px 20px;
+    padding-left: 35px;
+    font-size: 18px;
+    outline: none;
+    border: 1px solid var(--black2);
+}
+
+.search label i
+{
+    position: absolute;
+    top: 0;
+    left: 10px;
+    font-size: 1.2em;
+}
+
+.detail
+{
+    position: relative;
+    width: 130%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 30px;
+}
+
+button.delete
+{
+    width: 140px;
+    height: 40px;
+    border-radius: .25rem;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.detail .report
+{
+    position: relative;
+    min-height: 500px;
+    background: var(--white);
+    padding: 20px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+}
+
+.cardHeader
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.cardHeader h2  
+{
+    font-weight: 600;
+    color: var(--blue);
+}
+
+.btn
+{
+    position: relative;
+    padding: 5px 10px;
+    background: var(--blue);
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 6px;
+}
+
+.detail table
+{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.detail table thead td
+{
+    font-weight: 600;
+}
+
+.detail table tbody tr td button
+{
+    background: none;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+.detail .report table tr
+{
+    color: var(--black1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);    
+}
+
+.detail .report table tbody img
+{
+    width: 80px;
+}
+
+.detail .report table tbody tr:last-child
+{
+    border-bottom: none;
+}
+
+.detail .report table tbody tr:hover,
+.detail .report table tbody tr:hover a,
+.detail .report table tbody tr:hover button
+{
+    background: #6363fd;
+    color: var(--white)
+}
+
+.detail .report table tr td
+{
+    padding: 10px;
+}
+
+a, .text-link {
+    text-decoration: none;
+    background: transparent;
+}
+
+.filter
+{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.filter span
+{
+    font-size: 17px;
+}
+
+select
+{
+    margin-left: 20px;
+    width: 130px;
+    height: 30px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: .25rem;
+}
+
+button.filter-button
+{
+    margin-left: 20px;
+    border: none;
+    width: 130px;
+    height: 30px;
+    color: var(--white);
+    font-size: 16px;
+    border-radius: .25rem;
+    cursor: pointer;
+}
+
+button.report-button
+{
+    border: none;
+    width: 70px;
+    height: 40px;
+    color: var(--white);
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: .25rem;
+}
+
+.pagigation
+{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagigation a
+{
+    text-decoration: none;
+    background-color: var(--blue);
+    padding: 15px 20px;
+    background-repeat: 4px;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 50px;
+}
+
+.pagigation a ion-icon
+{
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: -10px;
+}
+
+@media (max-width: 991px)
+{
+    .navigation
+    {
+        left: -300px;
+    }
+    .navigation.active
+    {
+        width: 300px;
+        left: 0;
+    }
+    .main
+    {
+        width: 100%;
+        left: 0;
+    }
+    .search
+    {
+        margin-left: 60px;
+    }
+    .main.active
+    {
+        left: 300px;
+    }
+    .cardBox
+    {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media (max-width: 768px)
+{
+    .detail
+    {
+        grid-template-columns: repeat(1,1fr);
+    }
+    .report
+    {
+        overflow-x: auto;
+    }
+    .status.inProgress
+    {
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 480px)
+{
+    .cardBox
+    {
+        grid-template-columns: repeat(1,1fr);
+    }
+    .cardHeader h2
+    {
+        font-size: 20px;
+    }
+    .navigation
+    {
+        width: 100%;
+        left: -100%;
+        z-index: 1000;
+    }
+    .navigation.active
+    {
+        width: 100%;
+        left: 0;
+    }
+    .toggle
+    {
+        z-index: 10001;
+    }
+    .main.active .toggle
+    {
+        position: fixed;
+        right: 0;
+        left: initial;
+        color: var(--white);
+    }
+}   

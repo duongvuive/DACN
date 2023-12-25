@@ -136,11 +136,11 @@ namespace DACN3.Areas.Identity.Pages.Account
                         }
                         else if (IsInRole("Inventory Management"))
                         {
-                            return RedirectToAction("NotificationInventory", "Notification");
+                            return RedirectToAction("TrangChu", "Notification");
                         }
                         else if (IsInRole("Manager"))
                         {
-                            return RedirectToAction("ManagerStaff", "Manager");
+                            return RedirectToAction("TrangChu", "Manager");
                         }
                         else
                         {

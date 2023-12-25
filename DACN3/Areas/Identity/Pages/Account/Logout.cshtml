@@ -1,17 +1,22 @@
 ﻿@page
 @model LogoutModel
 @{
-    ViewData["Title"] = "Log out";
+    ViewData["Title"] = "Đăng xuất";
 }
 
 <header>
-    <h1>@ViewData["Title"]</h1>
+    <div class="detail">
+        <div class="report">
+            <div class="cardHeader">
+                <h2>Bạn muốn đăng xuất?</h2>
+            
     @{
         if (User.Identity?.IsAuthenticated ?? false)
         {
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Nhấn để đăng xuất</button>
+                <button type="submit" class="nav-link btn btn-link text-dark btn-logout">Nhấn để đăng xuất</button>
             </form>
+
         }
         else
         {
@@ -20,4 +25,26 @@
             </p>
         }
     }
+            </div>
+    </div>
+    </div>
 </header>
+
+<style>
+    .btn-logout {
+        background-color: #dc3545;
+        color: #fff;
+        border: 1px solid #dc3545;
+        padding: 12px 24px; /* Tăng kích thước padding để làm cho nút lớn hơn */
+        font-size: 18px; /* Tăng kích thước font */
+        cursor: pointer;
+        display: block; /* Để có thể sử dụng margin: auto để căn giữa */
+        margin: auto; /* Để căn giữa nút */
+    }
+
+        .btn-logout:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+</style>
+

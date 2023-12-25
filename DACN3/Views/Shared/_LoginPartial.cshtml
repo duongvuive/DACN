@@ -5,9 +5,9 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
+    <span class="user-name">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="" title="Manage">Xin chào @User.Identity?.Name!</a>
-    </li>
+    </span>
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" method="post">
             <button type="submit" class="mdi mdi-power"></button>
         </form>

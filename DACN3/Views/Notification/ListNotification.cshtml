@@ -2,32 +2,21 @@
 
 @{
     ViewData["Title"] = "Danh sách báo cáo";
-    Layout = "~/Views/Shared/LayoutList.cshtml";
+    Layout = "~/Views/Shared/LayoutInventory.cshtml";
 }
-
-<h1>Danh sách báo cáo</h1>
-
-<table class="table">
+<div class="detail">
+    <div class="report">
+        <div class="cardHeader">
+            <h2>DANH SÁCH BÁO CÁO</h2>
+        </div>
+<table>
     <thead>
         <tr>
-@*             <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th> *@
-            <th>
-                Thời gian
-            </th>
-            <th>
-                Mô tả
-            </th>
-            <th>
-                Hình ảnh
-            </th>
-            <th>
-                Số lượng
-            </th>
-            <th>
-                Trạng thái
-            </th>
+            <th>Thời gian</th>
+            <th>Mô tả</th>
+            <th>Hình ảnh</th>
+            <th>Số lượng</th>
+            <th>Trạng thái</th>
             <th></th>
         </tr>
     </thead>
@@ -35,9 +24,6 @@
         @foreach (var item in Model)
         {
             <tr>
-@*                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td> *@
                 <td>
                     @Html.DisplayFor(modelItem => item.Timestamp)
                 </td>
@@ -59,9 +45,14 @@
                 </td>
             </tr>
         }
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</div>
 <script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="/js/script.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 <script>
     $(document).on('click', '.confirm-notification', function () {
         var notificationId = $(this).data('id');
@@ -105,10 +96,8 @@
             });
         }
     });
-
-
-
-
+    
+    
 </script>
 <style>
     .action-buttons {
@@ -134,5 +123,8 @@
         .cancel-notification:hover {
             filter: brightness(90%); /* Adjust brightness on hover as desired */
         }
+    tr td {
+        text-align: center;
+    }
 
 </style>

@@ -21,6 +21,10 @@ namespace DACN3.Controllers
             _context = context;
             _hubContext = hubContext;
         }
+        public IActionResult TrangChu()
+        {
+            return View();
+        }
         public class AmountModel
         {
             public int amount { get; set; }
