@@ -181,11 +181,17 @@ namespace DACN3.Controllers
             }
             return Ok();
         }
+        [HttpGet]
+        public IActionResult ConfirmCancellation(int id, bool value)
+        {
+            TempData["NotificationId"] = id;
+            TempData["Value"] = value;
+            return View();
+        }
 
         [HttpPost]
         public IActionResult CancelNotification(int id, bool value, string Reason)
-        {
-         
+        {          
              var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _notificationSercvice.CreateConfirm(userId, id, value, Reason);
 
@@ -361,6 +367,26 @@ namespace DACN3.Controllers
             }
             return View(newViewImportExportWarehouses);
         }
+        [HttpGet]
+        public IActionResult DetailNotification(int id)
+        {
+            var notification = _context.Notifications.FirstOrDefault(x => x.Id == id);
+            var brokenHistory = _context.BrokenHistories.FirstOrDefault(x => x.Id == notification.IdBrokenHistory);
+            var aspNetUser = _context.AspNetUsers.FirstOrDefault(x => x.Id == brokenHistory.SenderId);
+            var AccountInformation=_context.AccountInformations.FirstOrDefault(x=>x.IdAspNetUsers==aspNetUser.Id);
+            var detailNotification = new DetailNotification
+            {
+                Id = id,
+                FullName= AccountInformation.FullName,
+                Email= aspNetUser.Email,
+                Timestamp=brokenHistory.Timestamp,
+                Description=notification.Description,
+                Image=notification.Image,
+            };
+            
+            return View(detailNotification);
+        }
+
 
     }
 }

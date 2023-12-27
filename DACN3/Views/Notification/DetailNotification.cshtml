@@ -1,0 +1,93 @@
+﻿@model DACN3.Models.ViewModel.DetailNotification
+
+@{
+    ViewData["Title"] = "DetailNotification";
+}
+
+<h1>DetailNotification</h1>
+
+<div>
+    <h4>DetailNotification</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Timestamp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Timestamp)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+    </dl>
+</div>
+<div>
+   @*  <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a> *@
+    <button class="confirm-notification" data-id="@Model.Id" data-value="true">Duyệt</button>
+    <button class="cancel-notification" data-id="@Model.Id" data-value="false">Hủy</button>
+</div>
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="/js/script.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script>
+    $(document).on('click', '.confirm-notification', function () {
+        var notificationId = $(this).data('id');
+        var value = $(this).data('value');
+
+        $.ajax({
+            url: "/Notification/ConfirmNotification",
+            method: "POST",
+            data: { id: notificationId, value: value },
+            success: function (response) {
+                alert("Xác nhận thay đổi tình trạng thành công");
+                window.location.href = "/Notification/TrangChu" ;
+            },
+            error: function (error) {
+                // Xử lý lỗi nếu có
+                console.log("Đã xảy ra lỗi: " + error);
+            }
+        });
+    });
+
+    $(document).on('click', '.cancel-notification', function () {
+        var notificationId = $(this).data('id');
+        var value = $(this).data('value');
+
+        $.ajax({
+            url: "/Notification/ConfirmCancellation",
+            method: "GET",
+            data: { id: notificationId, value: value},
+            success: function (response) {
+                window.location.href = "/Notification/ConfirmCancellation?id=" + notificationId;
+            },
+            error: function (error) {
+                console.log("Đã xảy ra lỗi: " + error);
+            }
+        });
+    });
+
+
+</script>
