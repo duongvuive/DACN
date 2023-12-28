@@ -1,20 +1,52 @@
 ﻿
 @{
-    ViewData["Title"] = "ConfirmCancellation";
+    ViewData["Title"] = "Xác nhận huỷ";
+    Layout = "~/Views/Shared/LayoutInventory.cshtml";
 }
+<div class="detail">
+    <div class="report">
+        <div class="cardHeader">
+            <h2>XÁC NHẬN HUỶ BÁO CÁO</h2>
+        </div>
+        <hr />
+        <style>
+            #reason-container {
+                min-width: 200px; /* Set a minimum width for the container */
+            }
 
-<h1>ConfirmCancellation</h1>
+            #reason-label {
+                font-weight: bold;
+            }
 
-<form id="cancelForm" method="post" action="/Notification/CancelNotification">
-    <input type="hidden" name="id" value="@TempData["NotificationId"]">
-    <input type="hidden" name="value" value="@TempData["Value"]">
+            #reason {
+                min-width: 100%; /* Take up the full width of the container */
+                resize: none; /* Disable manual resizing */
+                overflow-y: hidden; /* Hide vertical scrollbar */
+            }
+        </style>
 
-    <label for="reason">Reason:</label>
-    <input type="text" id="reason" name="Reason" required>
+        <script>
+            function adjustTextareaHeight() {
+                var textarea = document.getElementById("reason");
+                textarea.style.height = "auto";
+                textarea.style.height = (textarea.scrollHeight) + "px";
+            }
+        </script>
 
-    <button type="submit">Submit</button>
-</form>
+        <form id="cancelForm" method="post" action="/Notification/CancelNotification" class="mt-3">
+            <input type="hidden" name="id" value="@TempData["NotificationId"]">
+            <input type="hidden" name="value" value="@TempData["Value"]">
 
+            <div class="form-group" id="reason-container">
+                <label id="reason-label" for="reason">Lý do huỷ:</label>
+                <textarea id="reason" name="Reason" class="form-control" rows="1" oninput="adjustTextareaHeight()" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-danger">Xác nhận</button>
+        </form>
+
+        </div>
+        </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {

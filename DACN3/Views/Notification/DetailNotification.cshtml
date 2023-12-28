@@ -1,52 +1,51 @@
 ﻿@model DACN3.Models.ViewModel.DetailNotification
 
 @{
-    ViewData["Title"] = "DetailNotification";
+    ViewData["Title"] = "CHI TIẾT BÁO CÁO";
+    Layout = "~/Views/Shared/LayoutInventory.cshtml";
 }
 
-<h1>DetailNotification</h1>
-
-<div>
-    <h4>DetailNotification</h4>
+<div class="detail">
+    <div class="report">
+        <div class="cardHeader">
+            <h2>CHI TIẾT BÁO CÁO</h2>
+        </div>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Timestamp)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Timestamp)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image)
-        </dd>
+       <table class="table">
+    <tr>
+        <th scope="row" class="col-sm-2">Họ tên đầy đủ</th>
+        <td class="col-sm-10">@Html.DisplayFor(model => model.FullName)</td>
+    </tr>
+    <tr>
+        <th scope="row" class="col-sm-2">Email</th>
+        <td class="col-sm-10">@Html.DisplayFor(model => model.Email)</td>
+    </tr>
+    <tr>
+        <th scope="row" class="col-sm-2">Thời gian gửi</th>
+        <td class="col-sm-10">@Html.DisplayFor(model => model.Timestamp)</td>
+    </tr>
+    <tr>
+        <th scope="row" class="col-sm-2">Mô tả</th>
+        <td class="col-sm-10">@Html.DisplayFor(model => model.Description)</td>
+    </tr>
+    <tr>
+         <th scope="row" class="col-sm-2">Hình ảnh hiện trạng</th>
+    </tr>
+</table>     
+    <td>
+        <img src="@Url.Content(Model.Image)" alt="Image" style="max-width: 500px; max-height: 500px;" />
+    </td> 
     </dl>
-</div>
+
 <div>
    @*  <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a> *@
-    <button class="confirm-notification" data-id="@Model.Id" data-value="true">Duyệt</button>
-    <button class="cancel-notification" data-id="@Model.Id" data-value="false">Hủy</button>
+            <button class="confirm-notification btn btn-success" data-id="@Model.Id" data-value="true">Duyệt</button>
+            <button class="cancel-notification btn btn-danger" data-id="@Model.Id" data-value="false">Hủy</button>
+
+        </div>
+</div>
 </div>
 <script src="/lib/jquery/dist/jquery.min.js"></script>
 <script src="/js/script.js"></script>
@@ -91,3 +90,17 @@
 
 
 </script>
+<style>
+    .confirm-notification {
+        background-color: #28a745; /* Green color for Confirm button */
+        color: #fff; /* White text color */
+        /* Add more styling as needed */
+    }
+
+    .cancel-notification {
+        background-color: #dc3545; /* Red color for Cancel button */
+        color: #fff; /* White text color */
+        /* Add more styling as needed */
+    }
+
+</style>
